@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mt-5">
+    <h1>Реферальные бонусы</h1>
+</div>
+
+<div class="d-flex flex-wrap justify-content-evenly">
+    <button type="button" class="btn btn-outline-primary btn-lg mt-3" disabled>Бинар бонус</button>
+
+    <a class="btn btn-primary btn-lg mt-3" href="/rewards/referal">Реферальные</a>
+    <a class="btn btn-primary btn-lg mt-3" href="/rewards/cheque">Чек от чека</a>
+    <a class="btn btn-primary btn-lg mt-3" href="/rewards/status">Статусные</a>
+    <a class="btn btn-primary btn-lg mt-3" href="/rewards/sponsor">Спонсорские</a>
+</div>
+
+<div class="round card mt-5" style="height: 100vh;">
+    <div class="card-body">
+
+        <table class="table">
+            <thead>
+              <tr>
+                <th>Период</th>
+                <th>Малый</th>
+                <th>Большой</th>
+                <th>Бонус</th>
+                <th>Сторона</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+    </div>
+</div>
+
+<script>
+    const SiteUrl = "{{ site_url_and_port }}";  // Адрес сайта
+    const apiUrl = `${SiteUrl}/bonus/binar`;   // API эндпоинт
+    const token = "{{ token }}";               // Токен авторизации
+    
+    // Функция для загрузки данных с API
+    async function fetchBonusData() {
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Ошибка: ${response.status}`);
+            }
+    
+            const data = await response.json(); // Получаем JSON
+            renderTable(data);                  // Отображаем данные
+        } catch (error) {
+            console.error('Ошибка при загрузке данных:', error);
+        }
+    }
+    
+    // Функция для отображения данных в таблице
+    function renderTable(data) {
+        const tbody = document.querySelector('table tbody');
+        tbody.innerHTML = ''; // Очистить существующее содержимое таблицы
+    
+        data.forEach(item => {
+            const row = document.createElement('tr');
+    
+            row.innerHTML = `
+                <td>${item.period}</td>
+                <td>${item.small_volume}</td>
+                <td>${item.big_volume}</td>
+                <td><strong>${item.bonus_amount}<strong></td>
+                <td>${item.big_branch_side === 'right' ? 'Правый' : 'Левый'}</td>
+            `;
+    
+            tbody.appendChild(row);
+        });
+    }
+    
+    // Загрузка данных при загрузке страницы
+    document.addEventListener('DOMContentLoaded', fetchBonusData);
+    </script>
+    
+
+
+{% endblock %}

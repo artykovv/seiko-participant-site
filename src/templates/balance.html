@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mt-5">
+    <h1>Баланс</h1>
+</div>
+
+
+<div class="row mt-4 mb-4">
+    <div class="text-center">
+        <button type="button" class="btn btn-primary fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            История
+        </button>
+    </div>
+</div>
+
+{% include 'components/modals/history.html' %}
+
+  
+
+<div class="card mt-3">
+    <div class="card-body">
+        <p class="text-center mt-3 fw-normal mt-0 text-muted">Вознаграждение Реферал
+        </p>
+
+        <table class="table table-sm table-borderless text-center" id="referral-table">
+            <thead>
+                <tr>
+                    <th scope="col">За все время</th>
+                    <th scope="col">За предыдущий месяц</th>
+                    <th scope="col">За текущий месяц</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <p class="text-center mt-3 fw-normal mt-0 text-muted">Бинар
+        </p>
+
+        <table class="table table-sm table-borderless text-center" id="binary-table">
+            <thead>
+                <tr>
+                    <th scope="col">За все время</th>
+                    <th scope="col">За предыдущий месяц</th>
+                    <th scope="col">За текущий месяц</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <p class="text-center mt-3 fw-normal mt-0 text-muted">Чек от чека
+        </p>
+
+        <table class="table table-sm table-borderless text-center" id="cheque-table">
+            <thead>
+                <tr>
+                    <th scope="col">За все время</th>
+                    <th scope="col">За предыдущий месяц</th>
+                    <th scope="col">За текущий месяц</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="card mt-3">
+    <div class="card-body">
+        <p class="text-center mt-3 fw-normal mt-0 text-muted">Статусные бонусы
+        </p>
+
+        <table class="table table-sm table-borderless text-center" id="status-table">
+            <thead>
+                <tr>
+                    <th scope="col">За все время</th>
+                    <th scope="col">За предыдущий месяц</th>
+                    <th scope="col">За текущий месяц</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="card mt-3">
+    <div class="card-body">
+        <p class="text-center mt-3 fw-normal mt-0 text-muted">Спонсорский бонус
+        </p>
+
+        <table class="table table-sm table-borderless text-center" id="sponsor-table">
+            <thead>
+                <tr>
+                    <th scope="col">За все время</th>
+                    <th scope="col">За предыдущий месяц</th>
+                    <th scope="col">За текущий месяц</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--  -->
+
+<div class="card mt-3">
+    <div class="card-body">
+        <p class="text-center mt-3 fw-normal mt-0 text-muted">Итого бонусов
+        </p>
+
+        <table class="table table-sm table-borderless text-center" id="all-bonuses-table">
+            <thead>
+                <tr>
+                    <th scope="col">За все время</th>
+                    <th scope="col">За предыдущий месяц</th>
+                    <th scope="col">За текущий месяц</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    async function fetchBonuses() {
+        try {
+            const token = "{{ token }}";
+            const SiteUrl = "{{ site_url_and_port }}";
+
+            const response = await fetch(`${SiteUrl}/balance/`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Data fetched:', data);
+
+            // Tables mapping
+            const tables = {
+                referral: "referral-table",
+                binary: "binary-table",
+                cheque: "cheque-table",
+                status: "status-table",
+                sponsor: "sponsor-table",
+                all_bonuses: "all-bonuses-table",
+            };
+
+            // Populate tables
+            for (const bonusType in data.total) {
+                const total = data.total[bonusType] || 0;
+                const previousMonth = data.previous_month[bonusType] || 0;
+                const currentMonth = data.current_month[bonusType] || 0;
+
+                // Find the corresponding table
+                const tableId = tables[bonusType];
+                if (tableId) {
+                    const tbody = document.querySelector(`#${tableId} tbody`);
+                    tbody.innerHTML = `
+                        <tr>
+                            <td>${total.toFixed(2)}</td>
+                            <td>${previousMonth.toFixed(2)}</td>
+                            <td>${currentMonth.toFixed(2)}</td>
+                        </tr>
+                    `;
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching bonuses:", error);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchBonuses);
+</script>
+
+{% endblock %}

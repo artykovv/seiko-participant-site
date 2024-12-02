@@ -1,0 +1,61 @@
+<!-- Participant Modal -->
+<div class="modal fade" id="participantModal" tabindex="-1" aria-labelledby="participantModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="participantModalLabel">Детали участника</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body" id="participantDetails"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+<script>
+    const site = "{{ site_url_and_port }}";   
+    const token_modal = "{{ token }}";  
+    // Функция для загрузки данных участника в модальное окно
+    async function loadParticipantDetails(id) {
+        try {
+            const response = await fetch(`${site}/info/${id}`,
+                {
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${token_modal}`,
+                    }
+                }
+            );
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const participant = await response.json();
+    
+            const modalBody = document.getElementById('participantDetails');
+            modalBody.innerHTML = `
+                <p>${participant.personal_number}</p>
+                <br>
+                <p>${participant.name} ${participant.lastname} ${participant.patronymic || ''}</p>
+    
+                <p><strong>Пакет:</strong> ${participant.paket ? participant.paket.name + ' ($' + participant.paket.price + ')' : 'Не указано'}</p>
+                <p><strong>Спонсор:</strong> ${participant.sponsor ? participant.sponsor.name + ' ' + participant.sponsor.lastname + ' ' + participant.sponsor.personal_number: 'Не указано'}</p>
+                <p><strong>Наставник:</strong> ${participant.mentor ? participant.mentor.name + ' ' + participant.mentor.lastname : 'Не указано'}</p>
+    
+                <p><strong>Логин:</strong> ${participant.email}</p>
+                <p><strong>Личная информация:</strong> ${participant.personal_info}</p>
+    
+                <p><strong>Дата рождения:</strong> ${participant.birth_date ? new Date(participant.birth_date).toLocaleDateString() : 'Не указано'}</p>
+    
+    
+                <p><strong>Телефон:</strong> ${participant.phone_number}</p>
+                <p><strong>Филиал:</strong> ${participant.branch ? participant.branch.name : 'Не указано'}</p>
+                <p><strong>Банк. Номер (Мбанк):</strong> ${participant.bank}</p>
+            `;
+        } catch (error) {
+            console.error('Ошибка при получении данных участника: ', error);
+        }
+    }
+    </script>

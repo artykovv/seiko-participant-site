@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mt-5">
+    <h1>Статусные бонусы</h1>
+</div>
+
+<div class="d-flex flex-wrap justify-content-evenly">
+    <a class="btn btn-primary btn-lg mt-3" href="/rewards/binar">Бинар бонус</a>
+    <a class="btn btn-primary btn-lg mt-3" href="/rewards/referal">Реферальные</a>
+    <a class="btn btn-primary btn-lg mt-3" href="/rewards/cheque">Чек от чека</a>
+    <button type="button" class="btn btn-outline-primary btn-lg mt-3" disabled>Статусные</button>
+
+    <a class="btn btn-primary btn-lg mt-3" href="/rewards/sponsor">Спонсорские</a>
+</div>
+
+<div class="round card mt-5">
+    <div class="card-body">
+
+        <table class="table" style="height: 100vh;">
+            <thead>
+              <tr>
+                <th scope="col">Бонус</th>
+                <th scope="col">Статус</th>
+                <th scope="col">то Л</th>
+                <th scope="col">то П</th>
+                <th scope="col">Дата</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+    </div>
+</div>
+
+<script>
+  const SiteUrl = "{{ site_url_and_port }}";  // Адрес сайта
+  const apiUrl = `${SiteUrl}/bonus/status`;   // API эндпоинт
+  const token = "{{ token }}";               // Токен авторизации
+  
+  // Функция для загрузки данных с API
+  async function fetchBonusData() {
+      try {
+          const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+              }
+          });
+  
+          if (!response.ok) {
+              throw new Error(`Ошибка: ${response.status}`);
+          }
+  
+          const data = await response.json(); // Получаем JSON
+          renderTable(data);                  // Отображаем данные
+      } catch (error) {
+          console.error('Ошибка при загрузке данных:', error);
+      }
+  }
+  
+  // Функция для отображения данных в таблице
+  function renderTable(data) {
+      const tbody = document.querySelector('table tbody');
+      tbody.innerHTML = ''; // Очистить существующее содержимое таблицы
+  
+      data.forEach(item => {
+          const row = document.createElement('tr');
+  
+          row.innerHTML = `
+              <td>${item.bonus}</td>
+              <td>${item.status.name}</td>
+              <td>${item.left_volume_snapshot}</td>
+              <td>${item.right_volume_snapshot}</td>
+              <td>${new Date(item.created_at).toLocaleDateString()}</td>
+          `;
+  
+          tbody.appendChild(row);
+      });
+  }
+  
+  // Загрузка данных при загрузке страницы
+document.addEventListener('DOMContentLoaded', fetchBonusData);
+</script>
+
+{% endblock %}

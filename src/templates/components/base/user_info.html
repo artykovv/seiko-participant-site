@@ -1,0 +1,90 @@
+<div class="col-12 mb-3 col-sm-8">
+    <div class="card">
+        <div class="card-body text-center">
+            <div class="mt-5">
+                <div class="rounded-circle d-flex justify-content-center" style="background-color: blue; width: 200px; height: 200px; margin: auto;">
+                    <h1 id="initials" class="align-self-center" style="color: #fff;"></h1>
+                </div>
+            </div>
+
+            <h4 id="full-name" class="mt-5"></h4>
+            <h6 id="personal-number" class="fw-normal mb-0 text-secondary"></h6>
+            <h6 id="paket-name" class="fw-normal mb-0 text-secondary mt-5"></h6>
+
+            <div class="round mt-5">
+                <div class="">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">ТО правой</th>
+                            <th scope="col">ТО левой</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td id="right-volume"></td>
+                            <td id="left-volume"></td>
+                          </tr>    
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-3">
+    <div class="card adminuiux-card text-center">
+        <div class="card-body">
+            <p class="text-secondary small mb-2">Текущий месяц</p>
+            <h3 class="mb-3" id="datetime"></h3>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-3">
+    <div class="card adminuiux-card text-center">
+        <div class="card-body">
+            <p class="text-secondary small mb-2">Статус</p>
+            <h3 class="mb-3" id="status">$13.20k</h3>
+        </div>
+    </div>
+</div>
+
+<script>
+    const SiteUrl = "{{ site_url_and_port }}";
+    const apiUrl = `${SiteUrl}/users/me`; // API endpoint
+    const token = "{{ token }}"; // Replace with a secure token
+
+    // Set current date as "Месяц Год" format
+    const months = [
+    'ЯНВАРЬ', 'ФЕВРАЛЬ', 'МАРТ', 'АПРЕЛЬ', 'МАЙ', 'ИЮНЬ',
+    'ИЮЛЬ', 'АВГУСТ', 'СЕНТЯБРЬ', 'ОКТЯБРЬ', 'НОЯБРЬ', 'ДЕКАБРЬ'
+    ];
+
+    const now = new Date();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+
+    // Fetch data and populate HTML
+    fetch(apiUrl, {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Populate data
+        document.getElementById('initials').textContent = `${data.name[0]}${data.lastname[0]}`;
+        document.getElementById('full-name').textContent = `${data.name} ${data.lastname} ${data.patronymic}`;
+        document.getElementById('personal-number').textContent = data.personal_number;
+        document.getElementById('paket-name').textContent = data.paket.name.toUpperCase();
+        document.getElementById('right-volume').textContent = `${data.right_volume}`;
+        document.getElementById('left-volume').textContent = `${data.left_volume}`;
+        document.getElementById('datetime').textContent = `${month} ${year}`;
+        document.getElementById('status').textContent = data.status.name.toUpperCase();;
+    })
+    .catch(error => console.error('Error fetching user data:', error));
+</script>

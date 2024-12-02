@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% include 'components/modals/personal_num_modal.html' %}
+{% include 'components/modals/to_data_modal.html' %}
+
+
+<div class="text-center mt-5">
+    <h1>Структура</h1>
+</div>
+
+<div class="bg-body-tertiary rounded mt-5">
+    <div class="p-1">
+
+
+    </div>
+</div>
+
+
+
+<script>
+const SiteUrlSSS = "{{ site_url_and_port }}"; 
+const id = "{{ id }}"
+const apiUrlSSS = `${SiteUrlSSS}/children/${id}`;       // Endpoint для API
+const tokenSS = "{{ token }}";                // Токен авторизации
+
+async function fetchParticipants() {
+    try {
+        const response = await fetch(apiUrlSSS, {
+            headers: {
+                'Authorization': `Bearer ${tokenSS}`
+            }
+        });
+
+        if (!response.ok) { // Проверка успешности HTTP-ответа
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Data received:', data); // Проверка полученных данных в консоли
+
+        renderParticipants(data);
+
+    } catch (error) {
+        console.error('Error fetching data:', error); // Вывод ошибок в консоль
+    }
+}
+
+function renderParticipants(participant) {
+    // Контейнер для добавления карточек
+    const container = document.querySelector('.bg-body-tertiary .p-1');
+    if (!container) {
+        console.error('Container not found');
+        return;
+    }
+    container.innerHTML = ''; // Очистка контейнера
+
+    const html = getParticipantCardHtml(participant);
+    container.innerHTML = html;
+}
+
+function getParticipantCardHtml(participant) {
+    if (!participant) return '';
+
+    const {participant_id, participant_name, participant_lastname, participant_personal_number, left_child, right_child } = participant;
+
+    // Создание HTML для текущего участника
+    const participantHtml = `
+        <div class="card col-4 mx-auto">
+            <div class="card-body text-center">
+                <h6>${participant_name} ${participant_lastname}</h6>
+                <button class="btn btn-light mt-1" data-bs-toggle="modal" data-bs-target="#participantModal" onclick="loadParticipantDetails('${participant_id}')">${participant_personal_number}</button>
+                <button class="btn btn-light mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal"  onclick="fetchParticipantDetails('${participant_id}')">Подробнее</button>
+            </div>
+        </div>
+    `;
+
+    // Рекурсивное создание HTML для детей
+    const leftChildHtml = left_child ? getParticipantCardHtml(left_child) : '';
+    const rightChildHtml = right_child ? getParticipantCardHtml(right_child) : '';
+
+    const href = participant_id === id ? '' : `/structure/${participant_id}`;
+
+    return `
+        <div class="row mt-5">
+            <a href="${href}">
+                ${participantHtml}
+                ${leftChildHtml}
+                ${rightChildHtml}
+            </a>
+        </div>
+    `;
+}
+
+// Вызов fetchParticipants при загрузке страницы
+document.addEventListener('DOMContentLoaded', fetchParticipants);
+
+</script>
+
+{% endblock %}

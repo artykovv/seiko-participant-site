@@ -1,0 +1,71 @@
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">История</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul id="bonuses-list" class="list-group">
+            <!-- Список бонусов будет добавлен сюда -->
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const SiteUrl2 = "{{ site_url_and_port }}";
+        const token_history = "{{ token }}";
+  
+  
+        // Запрос к API для получения истории бонусов
+        const response = await fetch(`${SiteUrl2}/balance/history`,
+          {
+            headers: {
+              "Accept": "application/json",
+              "Authorization": `Bearer ${token_history}`,
+            }
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`Ошибка HTTP: ${response.status}`);
+        }
+  
+        const data = await response.json();
+  
+        // Контейнер для списка бонусов
+        const bonusesList = document.getElementById('bonuses-list');
+  
+        // Проверка наличия данных
+        if (data.bonuses.length === 0) {
+          bonusesList.innerHTML = '<li class="list-group-item text-center">Бонусы отсутствуют</li>';
+          return;
+        }
+  
+        // Очистка текущего содержимого
+        bonusesList.innerHTML = '';
+  
+        // Генерация списка бонусов
+        data.bonuses.forEach(bonus => {
+          const listItem = document.createElement('li');
+          listItem.className = 'list-group-item p-4';
+  
+          listItem.innerHTML = `
+            <strong>Тип бонуса:</strong> ${bonus.bonus_type}<br>
+            <strong>Сумма:</strong> ${bonus.bonus_amount}<br>
+            <strong>Дата:</strong> ${new Date(bonus.created_at).toLocaleString()}
+          `;
+          bonusesList.appendChild(listItem);
+        });
+      } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+        document.getElementById('bonuses-list').innerHTML = '<li class="list-group-item text-center text-danger">Ошибка загрузки данных</li>';
+      }
+    });
+  </script>

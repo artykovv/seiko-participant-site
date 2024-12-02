@@ -1,0 +1,204 @@
+<div id="alertContainer" class="mt-3"></div>
+
+<div class="col-12 mb-3 col-sm-8">
+    <div class="card">
+        <div class="card-body">
+
+            <table class="table">
+                <thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Телефон</td>
+                        <td id="phone_number" data-editing="false"></td>
+                        <td><a href="javascript:void(0);" onclick="toggleEdit(this, 'phone_number')">Изменить</a></td>
+                    </tr>
+                    <tr>
+                        <td>Логин</td>
+                        <td id="email" data-editing="false"></td>
+                        <td><a href="javascript:void(0);" onclick="toggleEdit(this, 'email')">Изменить</a></td>
+                    </tr>
+                    <tr>
+                        <td>Пароль</td>
+                        <td id="password"></td>
+                        <td><a href="javascript:void(0);" onclick="toggleEdit(this, 'password', 'password')">Изменить</a></td>
+                    </tr>
+                <tr>
+                    <td>Спонсор</td>
+                    <td id="sponsor"></td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>Вышестоящий</td>
+                    <td id="mentor"></td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>Дата регистрации</td>
+                    <td id="register_at"></td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>Банк# (мбанк)</td>
+                    <td id="bank" data-editing="false"></td>
+                    <td><a href="javascript:void(0);" onclick="toggleEdit(this, 'bank')">Изменить</a></td>
+                </tr>
+                <tr>
+                    <td>Личная информация</td>
+                    <td id="personal_info" data-editing="false"></td>
+                    <td><a href="javascript:void(0);" onclick="toggleEdit(this, 'personal_info')">Изменить</a></td>
+                </tr>
+                <tr>
+                    <td>ИП</td>
+                    <td id="ip_inn"></td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>Пенсионер</td>
+                    <td id="pensioner"></td>
+                    <td><a href=""></a></td>
+
+                </tr>
+                </tbody>
+              </table>
+
+        </div>
+    </div>    
+</div>
+
+<script>
+    const SiteUrl3 = "{{ site_url_and_port }}";
+    const apiUrl3 = `${SiteUrl3}/info`; // API endpoint
+    const token3 = "{{ token }}"; // Replace with a secure token
+    const alertContainer = document.getElementById('alertContainer');
+    
+
+    // Validate email format
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    async function fetchDataAndFillTable() {
+            try {
+                const response = await fetch(apiUrl3, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token3}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+
+                // Populate the table with the fetched data
+                document.getElementById('phone_number').textContent = data.phone_number || 'N/A';
+                document.getElementById('register_at').textContent = new Date(data.register_at).toLocaleDateString() || 'N/A';
+                document.getElementById('bank').textContent = data.bank || 'N/A';
+                document.getElementById('email').textContent = data.email || 'N/A';
+                document.getElementById('personal_info').textContent = data.personal_info || 'N/A';
+                document.getElementById('ip_inn').textContent = data.ip_inn ? 'Да' : 'Нет';
+                document.getElementById('pensioner').textContent = data.pensioner ? 'Да' : 'Нет';
+                
+                const sponsor = data.sponsor ? `${data.sponsor.name} ${data.sponsor.lastname} ${data.sponsor.patronymic} ${data.sponsor.personal_number}` : 'N/A';
+                document.getElementById('sponsor').textContent = sponsor;
+                
+                const mentor = data.mentor ? `${data.mentor.name} ${data.mentor.lastname} ${data.mentor.patronymic} ${data.mentor.personal_number}` : 'N/A';
+                document.getElementById('mentor').textContent = mentor;
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Call the function to fetch data and fill the table
+        fetchDataAndFillTable();
+
+        const apiUrlUpdate = `${SiteUrl3}/update`; // API endpoint for update
+
+// Toggle between edit and save mode
+function toggleEdit(button, fieldId, inputType = 'text') {
+    const td = document.getElementById(fieldId);
+    const isEditing = td.getAttribute('data-editing') === 'true';
+
+    if (isEditing) {
+        // Save mode
+        const input = td.querySelector('input');
+        const newValue = input.value.trim();
+
+        // Email validation
+        if (fieldId === "email" && !isValidEmail(newValue)) {
+            alertContainer.innerHTML = `
+                <div class="alert alert-danger" role="alert">
+                    Введите корректный email.
+                </div>
+            `;
+            return;
+        } else {
+            // Clear the alert if validation passes
+            alertContainer.innerHTML = '';
+        }
+
+        // Send data to the server
+        const updateData = {};
+        updateData[fieldId] = newValue;
+        saveData(updateData, button, td, fieldId, newValue);
+    } else {
+        // Edit mode
+        const currentValue = td.textContent.trim();
+        td.innerHTML = `<input type="${inputType}" value="${currentValue}" class="form-control" />`;
+        td.setAttribute('data-editing', 'true');
+        button.textContent = 'Сохранить';
+    }
+}
+
+// Save updated data
+async function saveData(updateData, button, td, fieldId, newValue) {
+    try {
+        const response = await fetch(apiUrlUpdate, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token3}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData),
+        });
+
+        if (response.ok) {
+            alertContainer.innerHTML = `
+                <div class="alert alert-success" role="alert" id="successMessage">
+                    Вы успешно поменяли.
+                </div>
+            `;
+
+            // Убираем сообщение через 3 секунды
+            setTimeout(() => {
+                const successMessage = document.getElementById('alertContainer');
+                if (successMessage) {
+                    successMessage.remove();
+                }
+            }, 3000);
+        }
+
+        if (!response.ok) {
+            throw new Error('Failed to save data.');
+        }
+
+        // If successful, revert to view mode
+        td.textContent = newValue || 'N/A';
+        td.setAttribute('data-editing', 'false');
+        button.textContent = 'Изменить';
+    } catch (error) {
+        console.error('Error saving data:', error);
+        alert('Не удалось сохранить данные.');
+    }
+}
+    </script>

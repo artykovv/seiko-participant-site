@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mt-5">
+    <h1>Личники в структуре</h1>
+</div>
+
+
+<div class="round card mt-5">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">N</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">Дата</th>
+              </tr>
+            </thead>
+            <tbody id="sponsored_participants_table">
+
+            </tbody>
+          </table>
+
+          <nav class="d-flex justify-content-center">
+            <ul class="pagination" id="pagination">
+                <!-- Кнопки пагинации будут добавляться здесь JavaScript'ом -->
+            </ul>
+          </nav>
+
+    </div>
+</div>
+
+{% include 'components/modals/personal_num_modal.html' %}
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {    
+        fetchSponsoredParticipants(1, 15); // Загружаем данные после загрузки страницы
+    });
+
+async function fetchSponsoredParticipants(page = 1, pageSize = 15,) {
+  const SiteUrl = "{{ site_url_and_port }}";  // Убедитесь, что эта переменная правильно инициализирована
+  const token = "{{ token }}";  
+
+        try {
+            const response = await fetch(`${SiteUrl}/sponsored/structure/?in_or_none=true&page=${page}&page_size=${pageSize}`, 
+                  {
+                      headers: {
+                          "Accept": "application/json",
+                          "Authorization": `Bearer ${token}`,
+                      }
+                  }
+              );
+              
+            const data = await response.json();
+    
+            updateUI(data.participants);  // Обновляем таблицу участников
+            updatePagination(data.page, data.total_pages); // Обновляем кнопки пагинации
+        } catch (error) {
+            console.error('Ошибка при получении данных: ', error);
+        }
+    }
+    
+    function updateUI(participants) {
+        const tableBody = document.getElementById('sponsored_participants_table');
+        tableBody.innerHTML = '';  // Очищаем таблицу перед добавлением новых строк
+    
+        if (participants.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="6" class="text-center">Ничего не найдено</td></tr>';
+            return;
+        }
+    
+        participants.forEach(participant => {
+            const row = `
+                <tr>
+                    <td>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal" onclick="loadParticipantDetails(${participant.id})">
+                            ${participant.personal_number}
+                        </a>
+                    </td>
+                    <td>${participant.name} ${participant.lastname} ${participant.patronymic || ''}</td>
+                    <td>${participant.register_at ? new Date(participant.register_at).toLocaleDateString('ru-RU') : 'Не указано'}</td>
+                </tr>
+            `;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+    
+    function updatePagination(currentPage, totalPages) {
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+    
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+        const createPageItem = (pageNumber, isActive = false) => `
+            <li class="page-item ${isActive ? 'active' : ''}">
+                <a class="page-link fs-3" href="#" onclick="fetchSponsoredParticipants(${pageNumber}, 15)">${pageNumber}</a>
+            </li>
+        `;
+    
+        // Добавляем первую страницу и многоточие
+        if (startPage > 1) {
+            pagination.insertAdjacentHTML('beforeend', createPageItem(1));
+            if (startPage > 2) {
+                pagination.insertAdjacentHTML('beforeend', `<li class="page-item"><span class="page-link">...</span></li>`);
+            }
+        }
+    
+        // Создаем ссылки для видимых страниц
+        for (let i = startPage; i <= endPage; i++) {
+            pagination.insertAdjacentHTML('beforeend', createPageItem(i, i === currentPage));
+        }
+    
+        // Добавляем последнюю страницу и многоточие
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                pagination.insertAdjacentHTML('beforeend', `<li class="page-item"><span class="page-link">...</span></li>`);
+            }
+            pagination.insertAdjacentHTML('beforeend', createPageItem(totalPages));
+        }
+    }
+    
+    </script>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+
+
+<div class="col-12 mb-3 col-sm-8">
+    <div class="card">
+        <div class="card-body text-center">
+            <p class="text-secondary small mb-2">ВСЕ БОНУСЫ</p>
+            <h4 id="total-bonuses" class="mb-3"></h4>
+        </div>
+    </div>    
+</div>
+
+<div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-3">
+    <div class="card adminuiux-card">
+        <div class="card-body">
+            <p class="text-secondary small mb-2">За предыдущий</p>
+            <h2 id="previous-month-bonus" class="mb-3"></h2>
+        </div>
+    </div>
+</div>
+
+<div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-3">
+    <div class="card adminuiux-card">
+        <div class="card-body">
+            <p class="text-secondary small mb-2">За текущий</p>
+            <h2 id="current-month-bonus" class="mb-3"></h2>
+        </div>
+    </div>
+</div>
+
+<div class="col-12 mb-3 col-sm-8">
+    <div class="card">
+        <div class="card-body text-center">
+            <p class="text-secondary small mb-2">До следующего Статуса</p>
+            <p class="text-secondary small mb-2">ТО малой ветки</p>
+            <h4 id="next-status-name" class="mb-3"></h4>
+            <h4 id="required-turnover-status" class="mb-3"></h4>
+        </div>
+    </div>    
+</div>
+
+<div class="col-12 mb-3 col-sm-8">
+    <div class="card">
+        <div class="card-body text-center">
+            <p class="text-secondary small mb-2">До следующего Бонуса</p>
+            <h4 id="next-bonus-name" class="mb-3"></h4>
+            <h4 id="required-turnover-bonus" class="mb-3"></h4>
+        </div>
+    </div>    
+</div>
+
+<script>
+    const SiteUrl2 = "{{ site_url_and_port }}";
+    const apiUrl2 = `${SiteUrl2}/bonuses_summary/`; // API endpoint
+    const token2 = "{{ token }}"; // Replace with a secure token
+
+    // Fetch data and populate HTML
+    fetch(apiUrl2, {
+        headers: {
+            "Authorization": `Bearer ${token2}`,
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Populate bonuses
+        document.getElementById('total-bonuses').textContent = data.bonuses.total;
+        document.getElementById('previous-month-bonus').textContent = data.bonuses.previous_month;
+        document.getElementById('current-month-bonus').textContent = data.bonuses.current_month;
+
+        // Populate status
+        document.getElementById('next-status-name').textContent = data.status.status_name;
+        document.getElementById('required-turnover-status').textContent = data.status.required_turnover;
+
+        // Populate gifts
+        document.getElementById('next-bonus-name').textContent = data.gifts.bonus_name;
+        document.getElementById('required-turnover-bonus').textContent = data.gifts.required_turnover;
+    })
+    .catch(error => console.error('Error fetching bonuses summary:', error));
+</script>

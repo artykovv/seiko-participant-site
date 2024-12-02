@@ -1,0 +1,61 @@
+
+<!-- Example Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Подробности</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <p>Статус: <span id="status"></span></p>
+                <p>Количество участников</p>
+                <p>Левая ветка: <span id="left_branch"></span></p>
+                <p>Правая ветка: <span id="right_branch"></span></p>
+                <p>Общий ТО: <span id="total_turnover"></span></p>
+                <p>Левая ветка: <span id="left_total_turnover"></span></p>
+                <p>Правая ветка: <span id="right_total_turnover"></span></p>
+                <p>Количество личников: <span id="personal_count"></span></p>
+                <p>Бонус за бинар: <span id="binary_bonus"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    async function fetchParticipantDetails(id) {
+
+        try {
+            const response = await fetch(`${SiteUrlSSS}/turnover/details/${id}`,
+                {
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${tokenSS}`,
+                    }
+                }
+            );
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const data = await response.json();
+
+            // Update the HTML with the fetched data
+            document.getElementById("status").innerText = data.paket || "Не указано";
+            document.getElementById("left_branch").innerText = data.descendants.left_descendants || "0";
+            document.getElementById("right_branch").innerText = data.descendants.right_descendants || "0";
+
+            document.getElementById("left_total_turnover").innerText = data.left_volume || "0";
+            document.getElementById("right_total_turnover").innerText = data.right_volume || "0";
+
+            document.getElementById("personal_count").innerText = data.sponsored || "0";
+            document.getElementById("binary_bonus").innerText = data.bonus_binar || "0";
+        } catch (error) {
+            console.error('Error fetching participant details:', error);
+        }
+    }
+
+    // Fetch data on page load
+    document.addEventListener("DOMContentLoaded", fetchParticipantDetails);
+</script>
