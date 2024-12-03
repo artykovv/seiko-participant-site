@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request, Response
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import FileResponse
 
 from functions import validate_token
 from config import site_url_and_port
@@ -9,6 +10,15 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
 
+
+@router.get("/download")
+async def download_file():
+    # Путь к файлу, который нужно скачать
+    file_path = "file/sanctions.pdf"
+    
+    # Параметр `media_type` указывает MIME-тип файла, 
+    # а параметр `filename` задает имя файла, которое будет видно пользователю
+    return FileResponse(path=file_path, media_type='application/octet-stream', filename="sanctions.pdf")
 
 
 @router.get("/login")
