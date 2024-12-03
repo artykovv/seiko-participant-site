@@ -28,6 +28,18 @@ async def page_(request: Request, response: Response):
     response.delete_cookie("Bearer")
     return response
 
+
+@router.get("/register")
+async def page_(request: Request):    
+    return templates.TemplateResponse(
+        "register.html",
+         {
+            "request": request,
+            "title": "Регистрация",
+            "site_url_and_port": site_url_and_port
+        }
+    )
+
 @router.get("/")
 async def page_(request: Request):
     

@@ -44,6 +44,9 @@
             <p class="text-secondary small mb-2">До следующего Бонуса</p>
             <h4 id="next-bonus-name" class="mb-3"></h4>
             <h4 id="required-turnover-bonus" class="mb-3"></h4>
+            <h4 class="mb-3">Остаток ТО для достижения: <span id="turnover-r"></span></h4>
+            <p>ТО в левой: <span id="left_volume"></span></p>
+            <p>ТО в левой: <span id="right_volume"></span></p>
         </div>
     </div>    
 </div>
@@ -70,10 +73,14 @@
         // Populate status
         document.getElementById('next-status-name').textContent = data.status.status_name;
         document.getElementById('required-turnover-status').textContent = data.status.required_turnover;
+        
 
         // Populate gifts
         document.getElementById('next-bonus-name').textContent = data.gifts.bonus_name;
         document.getElementById('required-turnover-bonus').textContent = data.gifts.required_turnover;
+        document.getElementById('turnover-r').textContent = data.gifts.turnover;
+        document.getElementById('left_volume').textContent = data.gifts.volumes.left_volume;
+        document.getElementById('right_volume').textContent = data.gifts.volumes.right_volume;
     })
     .catch(error => console.error('Error fetching bonuses summary:', error));
 </script>

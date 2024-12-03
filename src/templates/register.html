@@ -1,0 +1,417 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container widget-flat card p-5 mt-5">
+
+    <h5 class="fw-normal mt-0 text-muted mb-5" title="Number of Customers">Регистрация</h5>
+
+    <form>
+
+        <!-- sd -->
+        <div class="">
+
+            <div class="d-flex row">
+
+                <div class="col-sm-4 mb-3">
+
+                    <label for="phoneInput" class="form-label">Филиал</label>
+                    <select class="form-select mb-3" id="adressSelect" aria-label="Филиал">
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+
+                </div>
+                <div class="col-sm-4 mb-3">
+
+                    <fieldset disabled> 
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Номер</label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                        </div>
+                    </fieldset>
+  
+                </div>
+
+                <div class="col-sm-4 mb-3">
+                    <label for="phoneInput" class="form-label">Спонсор</label>
+                    <select class="form-select mb-3" id="sponsorSelect" aria-label="Default select example">
+                        <option selected>Спонсор</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- sd -->
+
+        <!-- Выбор пакета -->
+        <label for="phoneInput" class="form-label">Пакет</label>
+        <select class="form-select mb-3" id="paketsSelect" aria-label="Пакет">
+            <option selected>Пакет</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+        <!-- Выбор пакета -->
+
+        <!-- ФИО -->
+        <div>
+            <div class="d-flex row">
+                <div class="col-sm-4 mb-3">
+                    <label for="firstNameInput" class="form-label">Имя</label>
+                    <input type="text" class="form-control" id="firstNameInput">
+                </div>
+        
+                <div class="col-sm-4 mb-3">
+                    <label for="lastNameInput" class="form-label">Фамилия</label>
+                    <input type="text" class="form-control" id="lastNameInput">
+                </div>
+        
+                <div class="col-sm-4 mb-5">
+                    <label for="middleNameInput" class="form-label">Отчество</label>
+                    <input type="text" class="form-control" id="middleNameInput">
+                </div>
+            </div>
+        </div>
+        <!-- ФИО -->
+
+        <div class="mb-3">
+            <label for="emailInput" class="form-label">Почта</label>
+            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp">
+        </div>
+
+        <!-- <div class="mb-3">
+            <label for="loginInput" class="form-label">Логин</label>
+            <input type="text" class="form-control" id="loginInput" aria-describedby="loginHelp">
+        </div> -->
+
+        <div class="mb-3">
+            <label for="passwordInput" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="passwordInput">
+        </div>
+
+        <div class="mb-3">
+            <label for="confirmPasswordInput" class="form-label">Повторите пароль</label>
+            <input type="password" class="form-control" id="confirmPasswordInput">
+        </div>
+
+        <div class="mb-3">
+            <label for="personalInfoInput" class="form-label">Личная информация</label>
+            <textarea class="form-control" id="personalInfo" rows="3"></textarea>
+        </div>
+
+
+
+        
+
+        <div class="mb-3">
+            <label for="dobInput" class="form-label">Дата рождения</label>
+            <input type="date" class="form-control" id="dobInput">
+        </div>
+
+        <div class="mb-3">
+            <label for="pinInput" class="form-label">ПИН / ИНН</label>
+            <input type="text" class="form-control" id="pinInput">
+        </div>
+
+        <div class="mb-3">
+            <label for="docIdInput" class="form-label">ID документа</label>
+            <input type="text" class="form-control" id="docIdInput">
+        </div>
+
+        <div class="mb-3">
+            <label for="docDateInput" class="form-label">Дата выдачи документа</label>
+            <input type="date" class="form-control" id="docDateInput">
+        </div>
+
+        <div class="mb-3">
+            <label for="docIssuerInput" class="form-label">Кем выдан документ</label>
+            <input type="text" class="form-control" id="docIssuerInput">
+        </div>
+
+        <div class="mb-3">
+            <label for="phoneInput" class="form-label">Телефон</label>
+            <input type="tel" class="form-control" id="phoneInput">
+        </div>
+
+
+
+        <div class="mb-3">
+            <label for="bankInput" class="form-label">Банк</label>
+            <input type="text" class="form-control" id="bankInput" placeholder="Мбанк или номер карты">
+        </div>
+
+        <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="entrepreneurCheck">
+            <label class="form-check-label" for="entrepreneurCheck">ИП</label>
+        </div>
+
+        <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="retireeCheck">
+            <label class="form-check-label" for="retireeCheck">Пенсионер</label>
+        </div>
+
+        <div class="mt-5 d-flex justify-content-end">
+            <a class="btn btn-secondary" href="/registrations">Назад</a>
+            <button type="button" class="btn btn-success ms-4" id="saveButton">Сохранить</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+
+<script>
+
+const SiteUrl = "{{ site_url_and_port }}";
+const token = "{{ token }}";
+
+document.addEventListener('DOMContentLoaded', function() {
+    const disabledInput = document.getElementById('disabledTextInput');
+
+    // Запрашиваем данные из API
+    fetch(`${SiteUrl}/participant/personal_number`,
+        {
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`, // Добавьте токен здесь
+            }
+        }
+    )
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.personal_number) {
+                // Заполняем placeholder значением personal_number
+                disabledInput.placeholder = data.personal_number;
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке данных:', error);
+        });
+});
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const sponsorSelect = document.getElementById('sponsorSelect');
+
+        // Запрашиваем данные из API
+        fetch(`${SiteUrl}/participants`,
+        {
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`, // Добавьте токен здесь
+            }
+        }
+        )
+            .then(response => response.json())
+            .then(data => {
+                // Очищаем предыдущие опции (если нужно)
+                sponsorSelect.innerHTML = '<option selected>Спонсор</option>';
+
+                // Проходим по полученным данным и создаем опции
+                data.forEach(participant => {
+                    const option = document.createElement('option');
+                    option.value = participant.id;
+                    option.textContent = `${participant.personal_number} - (${participant.name} ${participant.lastname} ${participant.patronymic})`;
+
+                    // Добавляем новую опцию в select
+                    sponsorSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке данных:', error);
+            });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const paketsSelect = document.getElementById('paketsSelect');
+
+        // Запрашиваем данные из API
+        fetch(`${SiteUrl}/pakets`,
+        {
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`, // Добавьте токен здесь
+            }
+        }
+        )
+            .then(response => response.json())
+            .then(data => {
+                // Очищаем предыдущие опции (если нужно)
+                paketsSelect.innerHTML = '';
+
+                // Проходим по полученным данным и создаем опции
+                data.forEach(pakets => {
+                    const option = document.createElement('option');
+                    option.value = pakets.id;
+                    option.textContent = pakets.name;
+
+                    // Добавляем новую опцию в select
+                    paketsSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке данных:', error);
+            });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const adressSelect = document.getElementById('adressSelect');
+
+        // Запрашиваем данные из API
+        fetch(`${SiteUrl}/branches`,
+        {
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`, // Добавьте токен здесь
+            }
+        }
+        )
+            .then(response => response.json())
+            .then(data => {
+                // Очищаем предыдущие опции (если нужно)
+                adressSelect.innerHTML = '';
+
+                // Проходим по полученным данным и создаем опции
+                data.forEach(branches => {
+                    const option = document.createElement('option');
+                    option.value = branches.id;
+                    option.textContent = `${branches.code} ${branches.name}`;
+
+                    // Добавляем новую опцию в select
+                    adressSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке данных:', error);
+            });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const disabledInput = document.getElementById('disabledTextInput');
+    let personalNumber = '';  // Переменная для хранения персонального номера
+
+    // Запрашиваем данные из API
+    fetch(`${SiteUrl}/personal_number`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.personal_number) {
+                // Сохраняем персональный номер
+                personalNumber = data.personal_number;
+
+                // Заполняем placeholder значением personal_number
+                disabledInput.placeholder = personalNumber;
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке данных:', error);
+        });
+
+    // Обработчик кнопки "Сохранить"
+    const saveButton = document.getElementById('saveButton');
+
+    saveButton.addEventListener('click', function() {
+        // Собираем данные из формы
+        const sponsorId = parseInt(document.getElementById('sponsorSelect').value) || 0;
+        const name = document.getElementById('firstNameInput').value;
+        const lastname = document.getElementById('lastNameInput').value;
+        const patronymic = document.getElementById('middleNameInput').value;
+        // const login = document.getElementById('loginInput').value;
+        const email = document.getElementById('emailInput').value;
+        const personal_info = document.getElementById ('personalInfo').value;
+        const password = document.getElementById('passwordInput').value;
+        const confirmPassword = document.getElementById('confirmPasswordInput').value;
+        const phoneNumber = document.getElementById('phoneInput').value;
+        const address = document.getElementById('adressSelect').value;
+        const birthDate = document.getElementById('dobInput').value;
+        const pin = document.getElementById('pinInput').value;
+        const passportId = document.getElementById('docIdInput').value;
+        const passportIssuer = document.getElementById('docIssuerInput').value;
+        const passportIssueDate = document.getElementById('docDateInput').value;
+        const bank = document.getElementById('bankInput').value;
+        const ipInn = document.getElementById('entrepreneurCheck').checked;
+        const pensioner = document.getElementById('retireeCheck').checked;
+        const paketId = parseInt(document.getElementById('paketsSelect').value) || 0;
+        const branchId = parseInt(document.getElementById('adressSelect').value) || 0;
+
+        // Проверка заполнения обязательных полей
+        if (!sponsorId || !name || !lastname || !email || !password || !phoneNumber || !address || !birthDate || !pin || !passportId || !passportIssuer || !passportIssueDate || !bank) {
+            alert("Пожалуйста, заполните все обязательные поля.");
+            return;
+        }
+
+        // Проверка совпадения паролей
+        if (password !== confirmPassword) {
+            alert("Пароли не совпадают!");
+            return;
+        }
+
+        // Данные для POST-запроса
+        const requestBody = {
+            sponsor_id: sponsorId,
+            name: name,
+            lastname: lastname,
+            patronymic: patronymic,
+            email: email,
+            password: password,
+            phone_number: phoneNumber,
+            address: address,
+            birth_date: birthDate,
+            pin: pin,
+            personal_info: personal_info,
+            passport_id: passportId,
+            passport_issuer: passportIssuer,
+            passport_issue_date: passportIssueDate,
+            bank: bank,
+            ip_inn: ipInn,
+            pensioner: pensioner,
+            paket_id: paketId,
+            branch_id: branchId,
+            code: personalNumber  // Добавляем personal_number как code
+        };
+
+        // Отправка POST-запроса
+        fetch(`${SiteUrl}/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`, // Добавьте токен здесь
+
+            },
+            body: JSON.stringify(requestBody)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Ошибка сервера");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert("Участник успешно создан!");
+                setTimeout(() => {
+                    window.location.href = '/login';
+                }, 2000);
+            } else {
+                console.error("Ошибка:", data);
+                alert("Произошла ошибка при создании участника.");
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при отправке данных:', error);
+            alert("Ошибка при отправке данных.");
+        });
+    });
+});
+
+</script>
+{% endblock %}
