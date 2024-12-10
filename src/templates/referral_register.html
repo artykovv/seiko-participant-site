@@ -34,14 +34,19 @@
                 </div>
 
                 <div class="col-sm-4 mb-3">
-                    <label for="phoneInput" class="form-label">Спонсор</label>
-                    <select class="form-select mb-3" id="sponsorSelect" aria-label="Default select example">
-                        <option selected>Спонсор</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-
+                    <label for="sponsorInput" class="form-label">Спонсор</label>
+                    <input 
+                        type="text" 
+                        id="sponsorInput" 
+                        class="form-control" 
+                        value="{{ sponsor_personal_number }}" 
+                        disabled
+                    >
+                    <input 
+                        type="hidden" 
+                        id="sponsorIdInput" 
+                        value="{{ sponsor_id }}"
+                    >
                 </div>
 
             </div>
@@ -199,38 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     document.addEventListener('DOMContentLoaded', function() {
-        const sponsorSelect = document.getElementById('sponsorSelect');
-
-        // Запрашиваем данные из API
-        fetch(`${SiteUrl}/participants`,
-        {
-            headers: {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`, // Добавьте токен здесь
-            }
-        }
-        )
-            .then(response => response.json())
-            .then(data => {
-                // Очищаем предыдущие опции (если нужно)
-                sponsorSelect.innerHTML = '<option selected>Спонсор</option>';
-
-                // Проходим по полученным данным и создаем опции
-                data.forEach(participant => {
-                    const option = document.createElement('option');
-                    option.value = participant.id;
-                    option.textContent = `${participant.personal_number} - (${participant.name} ${participant.lastname} ${participant.patronymic})`;
-
-                    // Добавляем новую опцию в select
-                    sponsorSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Ошибка при загрузке данных:', error);
-            });
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
         const paketsSelect = document.getElementById('paketsSelect');
 
         // Запрашиваем данные из API
@@ -301,26 +274,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Запрашиваем данные из API
     fetch(`${SiteUrl}/participant/personal_number`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка API: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('Полученные данные:', data); // Логируем ответ API
             if (data && data.personal_number) {
-                // Сохраняем персональный номер
                 personalNumber = data.personal_number;
-
-                // Заполняем placeholder значением personal_number
                 disabledInput.placeholder = personalNumber;
+            } else {
+                console.warn('Персональный номер отсутствует в ответе API.');
             }
         })
         .catch(error => {
             console.error('Ошибка при загрузке данных:', error);
         });
-
     // Обработчик кнопки "Сохранить"
     const saveButton = document.getElementById('saveButton');
 
     saveButton.addEventListener('click', function() {
         // Собираем данные из формы
-        const sponsorId = parseInt(document.getElementById('sponsorSelect').value) || 0;
+        const sponsorId = document.getElementById('sponsorIdInput').value;
         const name = document.getElementById('firstNameInput').value;
         const lastname = document.getElementById('lastNameInput').value;
         const patronymic = document.getElementById('middleNameInput').value;

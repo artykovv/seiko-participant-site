@@ -50,6 +50,23 @@ async def page_(request: Request):
         }
     )
 
+@router.get("/referral_register/{id}_personal_number{personal_number}")
+async def referral_register_page(
+    id: int,
+    personal_number: str,
+    request: Request
+    ):
+    return templates.TemplateResponse(
+        "referral_register.html",
+        {
+            "request": request,
+            "title": "Регистрация по реферальному коду",
+            "site_url_and_port": site_url_and_port,
+            "sponsor_id": id,  # Передаем ID спонсора
+            "sponsor_personal_number": personal_number  # Передаем номер спонсора
+        }
+    )
+
 @router.get("/")
 async def page_(request: Request):
     

@@ -33,6 +33,19 @@
     </div>    
 </div>
 
+
+<div class="col-12 mb-3 col-sm-8">
+    <div class="card">
+        <div class="card-body text-center">
+            <p class="text-secondary small mb-2">Реферальная ссылка</p>
+            <div class="d-grid gap-2 mt-5 mb-5">
+                <input id="referal-link" class="form-control form-control-lg" type="text" value="d" aria-label="Disabled input example" disabled readonly>
+                <button  id="copy-button" class="btn btn-primary mt-2 btn-lg">Копировать</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-3">
     <div class="card adminuiux-card text-center">
         <div class="card-body">
@@ -85,6 +98,29 @@
         document.getElementById('left-volume').textContent = `${data.left_volume}`;
         document.getElementById('datetime').textContent = `${month} ${year}`;
         document.getElementById('status').textContent = data.status.name.toUpperCase();;
+
+        // Generate referral link
+        const referralLink = `http://127.0.0.1:8080/referral_register/${data.id}_personal_number${data.personal_number}`;
+        document.getElementById('referal-link').value = referralLink; // Set the value of the input field
     })
     .catch(error => console.error('Error fetching user data:', error));
+
+      // Функция копирования текста
+      document.getElementById('copy-button').addEventListener('click', () => {
+        // Получение значения из поля input
+        const referralLink = document.getElementById('referal-link').value;
+
+        // Копирование значения в буфер обмена
+        navigator.clipboard.writeText(referralLink)
+            .then(() => {
+                // Успешное копирование: уведомление пользователя
+                alert('Реферальная ссылка скопирована!');
+            })
+            .catch(err => {
+                // Ошибка копирования
+                console.error('Ошибка копирования: ', err);
+                alert('Не удалось скопировать ссылку. Пожалуйста, попробуйте снова.');
+            });
+    });
+
 </script>
