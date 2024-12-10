@@ -100,7 +100,8 @@
         document.getElementById('status').textContent = data.status.name.toUpperCase();;
 
         // Generate referral link
-        const referralLink = `http://127.0.0.1:8080/referral_register/${data.id}_personal_number${data.personal_number}`;
+        const baseUrl = window.location.origin;
+        const referralLink = `${baseUrl}/referral_register/${data.id}_personal_number${data.personal_number}`;
         document.getElementById('referal-link').value = referralLink; // Set the value of the input field
     })
     .catch(error => console.error('Error fetching user data:', error));
