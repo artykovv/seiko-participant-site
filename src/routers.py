@@ -4,10 +4,6 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
 
-import base64
-from Crypto.Cipher import AES
-import os
-
 
 from functions import validate_token
 from config import site_url_and_port, key
