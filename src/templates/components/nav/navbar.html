@@ -1,12 +1,13 @@
-<nav class="navbar navbar-light bg-body-tertiary mt-3 rounded">
+<nav class="navbar navbar-light bg-body-tertiary mt-3 rounded" style="background-color: #000080 !important;">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
-            <img src="/static/images/logo.svg" width="150" alt="Example Image">
+            <img src="/static/images/logo.svg" width="200" alt="Example Image">
         </a>
 
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" >
-            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-          </svg>
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" >
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.25 30C6.25 29.6685 6.3817 29.3505 6.61612 29.1161C6.85054 28.8817 7.16848 28.75 7.5 28.75H32.5C32.8315 28.75 33.1495 28.8817 33.3839 29.1161C33.6183 29.3505 33.75 29.6685 33.75 30C33.75 30.3315 33.6183 30.6495 33.3839 30.8839C33.1495 31.1183 32.8315 31.25 32.5 31.25H7.5C7.16848 31.25 6.85054 31.1183 6.61612 30.8839C6.3817 30.6495 6.25 30.3315 6.25 30ZM6.25 20C6.25 19.6685 6.3817 19.3505 6.61612 19.1161C6.85054 18.8817 7.16848 18.75 7.5 18.75H32.5C32.8315 18.75 33.1495 18.8817 33.3839 19.1161C33.6183 19.3505 33.75 19.6685 33.75 20C33.75 20.3315 33.6183 20.6495 33.3839 20.8839C33.1495 21.1183 32.8315 21.25 32.5 21.25H7.5C7.16848 21.25 6.85054 21.1183 6.61612 20.8839C6.3817 20.6495 6.25 20.3315 6.25 20ZM6.25 10C6.25 9.66848 6.3817 9.35054 6.61612 9.11612C6.85054 8.8817 7.16848 8.75 7.5 8.75H32.5C32.8315 8.75 33.1495 8.8817 33.3839 9.11612C33.6183 9.35054 33.75 9.66848 33.75 10C33.75 10.3315 33.6183 10.6495 33.3839 10.8839C33.1495 11.1183 32.8315 11.25 32.5 11.25H7.5C7.16848 11.25 6.85054 11.1183 6.61612 10.8839C6.3817 10.6495 6.25 10.3315 6.25 10Z" fill="white"/>
+            </svg>
+            
     </div>
 </nav>
   
@@ -14,7 +15,7 @@
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
-    <img src="/static/images/logo.svg" width="200" alt="Example Image">
+    <img class="mt-3" src="/static/images/logo2.svg" width="200" alt="Example Image">
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -24,7 +25,7 @@
           <a class="nav-link {% if current_path == '/' %}active{% endif %}" href="/">Главное</a>
       </li>
       <li class="nav-item">
-          <a class="nav-link {% if current_path == '/structure' %}active{% endif %}" href="/structure">Структура</a>
+          <a class="nav-link {% if current_path == '/structure' %}active{% endif %}" href="/structure">Организация</a>
       </li>
       <li class="nav-item">
           <a class="nav-link {% if current_path == '/rewards' %}active{% endif %}" href="/rewards">Вознаграждения</a>
@@ -43,7 +44,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link {% if current_path == '/new/sponsored' %}active{% endif %}" href="/download">Санкции</a>
+        <a class="nav-link {% if current_path == '/sanctions' %}active{% endif %}" href="/sanctions">Санкции</a>
     </li>
 
       <li class="nav-item mt-5">
@@ -54,3 +55,13 @@
 
   </div>
 </div>
+
+
+<style>
+.nav-pills {
+    --bs-nav-pills-link-active-bg: #000080
+}
+.nav-pills .nav-link {
+    color: black;
+}
+</style>

@@ -6,16 +6,16 @@
 </div>
 
 <div class="d-flex flex-wrap justify-content-evenly">
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/binar">Бинар бонус</a>
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/referal">Реферальные</a>
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/cheque">Чек от чека</a>
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/status">Статусные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/binar">Бинар бонус</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/referal">Реферальные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/cheque">Чек от чека</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/status">Статусные</a>
     <button type="button" class="btn btn-outline-primary btn-lg mt-3" disabled>Спонсорские</button>
 </div>
 
 <div class="round card mt-5" style="height: 100vh;">
     <div class="card-body">
-        <table class="table">
+        <table class="table fs-3">
             <thead>
               <tr>
                 <th scope="col">Бонус</th>
@@ -77,4 +77,10 @@
 document.addEventListener('DOMContentLoaded', fetchBonusData);
 </script>
 
+<style>
+    .btn:disabled{
+        border-color: #000080;
+        color: #000080;
+    }
+</style>
 {% endblock %}

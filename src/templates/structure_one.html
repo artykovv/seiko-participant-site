@@ -1,100 +1,615 @@
+
 {% extends "base.html" %}
 {% block content %}
 
-{% include 'components/modals/personal_num_modal.html' %}
+<div class="text-center mt-5">
+    <h1>Организация</h1>
+</div>
+
 {% include 'components/modals/to_data_modal.html' %}
 
 
-<div class="text-center mt-5">
-    <h1>Структура</h1>
-</div>
+<div class="card body genealogy-body genealogy-scroll">
+    <div class="genealogy-tree">
 
-<div class="bg-body-tertiary rounded mt-5">
-    <div class="p-1">
+
+        <ul>
+            <li>
+                <a id="a.participant_personal_number">
+                    <div class="member-view-box">
+                        <div class="member-footer">
+                            <div id="participant_name_participant_lastname">
+                                <div class="name"><span id="participant_name"><span></div>
+                                <div class="name"><span id="participant_lastname"><span></div>
+                            </div>
+                            
+                            <div class="d-flex flex-column" style="z-index: 1000;">
+                                <span href="" class="name btn" id="participant_personal_number"></span>
+                                <span href="" class="name btn" id="dt.participant_personal_number"></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <ul class="active">
+                    <li>
+                        <a id="a.left_child.participant_personal_number">
+                            <div class="member-view-box">
+                                <div class="member-footer">
+                                    <div id="left_child.participant_name_participant_lastname">
+                                        <div class="name"><span id="left_child.participant_name"><span></div>
+                                        <div class="name"><span id="left_child.participant_lastname"><span></div>
+                                    </div>
+                                        <div class="d-flex flex-column">
+                                            <button href="" class="name btn" id="left_child.participant_personal_number"></button>
+                                            <button href="" class="name btn" id="dt.left_child.participant_personal_number"></button>
+                                        </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <ul>
+                            <li>
+                            <a id="a.left_child.left_child.participant_personal_number">
+                                <div class="member-view-box">
+                                    <div class="member-footer">
+                                        <div id="left_child.left_child.participant_name_participant_lastname">
+                                            <div class="name"><span id="left_child.left_child.participant_name"><span></div>
+                                            <div class="name"><span id="left_child.left_child.participant_lastname"><span></div>
+                                        </div>
+                                            <div class="d-flex flex-column">
+                                                <button href="" class="name btn" id="left_child.left_child.participant_personal_number"></button>
+                                                <button href="" class="name btn" id="dt.left_child.left_child.participant_personal_number"></button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </li>
+                            <li>
+                                <a id="a.left_child.right_child.participant_personal_number">
+                                    <div class="member-view-box">
+                                        <div class="member-footer">
+                                            <div id="left_child.right_child.participant_name_participant_lastname">
+                                                <div class="name"><span id="left_child.right_child.participant_name"><span></div>
+                                                <div class="name"><span id="left_child.right_child.participant_lastname"><span></div>
+                                            </div>
+                                                <div class="d-flex flex-column">
+                                                    <button href="" class="name btn" id="left_child.right_child.participant_personal_number"></button>
+                                                    <button href="" class="name btn" id="dt.left_child.right_child.participant_personal_number"></button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a id="a.right_child.participant_personal_number">
+                            <div class="member-view-box">
+                                <div class="member-footer">
+                                    <div id="right_child.participant_name_participant_lastname">
+                                        <div class="name"><span id="right_child.participant_name"><span></div>
+                                        <div class="name"><span id="right_child.participant_lastname"><span></div>
+                                    </div>
+                                        <div class="d-flex flex-column">
+                                            <button href="" class="name btn" id="right_child.participant_personal_number"></button>
+                                            <button href="" class="name btn" id="dt.right_child.participant_personal_number"></button>
+                                        </div>
+                                </div>
+                            </div>
+                        </a>
+                        <ul>
+                            <li>
+                                <a id="a.right_child.left_child.participant_personal_number">
+                                    <div class="member-view-box">
+                                        <div class="member-footer">
+                                            <div id="right_child.left_child.participant_name_participant_lastname">
+                                                <div class="name"><span id="right_child.left_child.participant_name"><span></div>
+                                                <div class="name"><span id="right_child.left_child.participant_lastname"><span></div>
+                                            </div>
+                                                <div class="d-flex flex-column">
+                                                    <button href="" class="name btn" id="right_child.left_child.participant_personal_number"></button>
+                                                    <button href="" class="name btn" id="dt.right_child.left_child.participant_personal_number"></button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a id="a.right_child.right_child.participant_personal_number">
+                                    <div class="member-view-box">
+                                        <div class="member-footer">
+                                            <div id="right_child.right_child.participant_name_participant_lastname">
+                                                <div class="name"><span id="right_child.right_child.participant_name"><span></div>
+                                                <div class="name"><span id="right_child.right_child.participant_lastname"><span></div>
+                                            </div>
+                                                <div class="d-flex flex-column">
+                                                    <button href="" class="name btn" id="right_child.right_child.participant_personal_number"></button>
+                                                    <button href="" class="name btn" id="dt.right_child.right_child.participant_personal_number"></button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </a>
+                    
+                            </li>
+                        </ul>
+                    </li>
+            </ul>
+            </li>
+        </ul>
 
 
     </div>
 </div>
 
 
-
 <script>
-const SiteUrlSSS = "{{ site_url_and_port }}"; 
+const SiteUrl = "{{ site_url_and_port }}"; 
 const id = "{{ id }}"
-const apiUrlSSS = `${SiteUrlSSS}/children/${id}`;       // Endpoint для API
-const tokenSS = "{{ token }}";                // Токен авторизации
+const apiUrl = `${SiteUrl}/children/${id}`; 
+const token = "{{ token }}";  
+const salt = "{{ token }}";  
+
 
 async function fetchParticipants() {
     try {
-        const response = await fetch(apiUrlSSS, {
+        const response = await fetch(apiUrl, {
             headers: {
-                'Authorization': `Bearer ${tokenSS}`
+                'Authorization': `Bearer ${token}`
             }
         });
 
-        if (!response.ok) { // Проверка успешности HTTP-ответа
+        if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
-        console.log('Data received:', data); // Проверка полученных данных в консоли
+        console.log('Data received:', data);
 
-        renderParticipants(data);
+        // Populate the tree structure
+        populateTree(data);
 
     } catch (error) {
-        console.error('Error fetching data:', error); // Вывод ошибок в консоль
+        console.error('Error fetching data:', error);
     }
 }
 
-function renderParticipants(participant) {
-    // Контейнер для добавления карточек
-    const container = document.querySelector('.bg-body-tertiary .p-1');
-    if (!container) {
-        console.error('Container not found');
-        return;
+function populateTree(data) {
+    // Populate root participant
+    document.getElementById("participant_name").textContent = data.participant_name || "N/A";
+    document.getElementById("participant_lastname").textContent = data.participant_lastname || "N/A";
+
+    const rootButton = document.querySelector('#participant_personal_number');
+    rootButton.textContent = data.participant_personal_number || "N/A";
+    // rootButton.setAttribute("data-bs-toggle", "modal");
+    // rootButton.setAttribute("data-bs-target", "#participantModal");
+    // rootButton.setAttribute("onclick", `loadParticipantDetails('${data.participant_id}')`);
+
+    const DtButton = document.getElementById('dt.participant_personal_number');
+    DtButton.textContent = "Подробнее" || "N/A";
+    DtButton.setAttribute("data-bs-toggle", "modal");
+    DtButton.setAttribute("data-bs-target", "#exampleModal");
+    DtButton.setAttribute("onclick", `fetchParticipantDetails('${data.participant_id}')`);
+
+    const ABgColor = document.getElementById('a.participant_personal_number');
+    ABgColor.style.background = `linear-gradient(${data.color})`;
+    const DivNameLastname = document.getElementById('participant_name_participant_lastname');
+
+
+    DivNameLastname.addEventListener('click', async () => {
+        const rawData = `${data.participant_personal_number}${data.participant_id}${data.participant_id2}${salt}`;
+
+        // Генерация хеша
+        const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawData));
+        const securePath = Array.from(new Uint8Array(hashBuffer))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+
+        // Перенаправление после генерации
+        window.location.href = `/structure/${securePath}/${data.participant_id}/${securePath}${securePath}`;
+    });
+
+
+
+    // Populate left child
+    if (data.left_child) {
+        document.getElementById("left_child.participant_name").textContent = data.left_child.participant_name || "N/A";
+        document.getElementById("left_child.participant_lastname").textContent = data.left_child.participant_lastname || "N/A";
+
+        const rootButton = document.getElementById('left_child.participant_personal_number');
+        rootButton.textContent = data.left_child.participant_personal_number || "N/A";
+        // rootButton.setAttribute("data-bs-toggle", "modal");
+        // rootButton.setAttribute("data-bs-target", "#participantModal");
+        // rootButton.setAttribute("onclick", `loadParticipantDetails('${data.left_child.participant_id}')`);
+
+        const DtButton = document.getElementById('dt.left_child.participant_personal_number');
+        DtButton.textContent = "Подробнее" || "N/A";
+        DtButton.setAttribute("data-bs-toggle", "modal");
+        DtButton.setAttribute("data-bs-target", "#exampleModal");
+        DtButton.setAttribute("onclick", `fetchParticipantDetails('${data.left_child.participant_id}')`);
+
+        const ABgColor = document.getElementById('a.left_child.participant_personal_number');
+        ABgColor.style.background = `linear-gradient(${data.left_child.color})`;
+        const DivNameLastname = document.getElementById('left_child.participant_name_participant_lastname');
+
+
+        DivNameLastname.addEventListener('click', async () => {
+            const rawData = `${data.left_child.participant_personal_number}${data.left_child.participant_id}${data.left_child.participant_id2}${salt}`;
+
+            // Генерация хеша
+            const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawData));
+            const securePath = Array.from(new Uint8Array(hashBuffer))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
+
+            // Перенаправление после генерации
+            window.location.href = `/structure/${securePath}/${data.left_child.participant_id}/${securePath}${securePath}`;
+        });
+
+        // Populate left child's children
+        if (data.left_child.left_child) {
+            document.getElementById("left_child.left_child.participant_name").textContent = data.left_child.left_child.participant_name || "N/A";
+            document.getElementById("left_child.left_child.participant_lastname").textContent = data.left_child.left_child.participant_lastname || "N/A";
+
+            const rootButton = document.getElementById('left_child.left_child.participant_personal_number');
+            rootButton.textContent = data.left_child.left_child.participant_personal_number || "N/A";
+            // rootButton.setAttribute("data-bs-toggle", "modal");
+            // rootButton.setAttribute("data-bs-target", "#participantModal");
+            // rootButton.setAttribute("onclick", `loadParticipantDetails('${data.left_child.left_child.participant_id}')`);
+            
+            const DtButton = document.getElementById('dt.left_child.left_child.participant_personal_number');
+            DtButton.textContent = "Подробнее" || "N/A";
+            DtButton.setAttribute("data-bs-toggle", "modal");
+            DtButton.setAttribute("data-bs-target", "#exampleModal");
+            DtButton.setAttribute("onclick", `fetchParticipantDetails('${data.left_child.left_child.participant_id}')`);
+
+            const ABgColor = document.getElementById('a.left_child.left_child.participant_personal_number');
+            ABgColor.style.background = `linear-gradient(${data.left_child.left_child.color})`;
+            const DivNameLastname = document.getElementById('left_child.left_child.participant_name_participant_lastname');
+            
+            DivNameLastname.addEventListener('click', async () => {
+                const rawData = `${data.left_child.left_child.participant_personal_number}${data.left_child.left_child.participant_id}${data.left_child.left_child.participant_id2}${salt}`;
+
+                // Генерация хеша
+                const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawData));
+                const securePath = Array.from(new Uint8Array(hashBuffer))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join('');
+
+                // Перенаправление после генерации
+                window.location.href = `/structure/${securePath}/${data.left_child.left_child.participant_id}/${securePath}${securePath}`;
+            });
+
+        }
+
+        if (data.left_child.right_child) {
+            document.getElementById("left_child.right_child.participant_name").textContent = data.left_child.right_child.participant_name || "N/A";
+            document.getElementById("left_child.right_child.participant_lastname").textContent = data.left_child.right_child.participant_lastname || "N/A";
+
+            const rootButton = document.getElementById('left_child.right_child.participant_personal_number');
+            rootButton.textContent = data.left_child.right_child.participant_personal_number || "N/A";
+            // rootButton.setAttribute("data-bs-toggle", "modal");
+            // rootButton.setAttribute("data-bs-target", "#participantModal");
+            // rootButton.setAttribute("onclick", `loadParticipantDetails('${data.left_child.right_child.participant_id}')`);
+
+            const DtButton = document.getElementById('dt.left_child.right_child.participant_personal_number');
+            DtButton.textContent = "Подробнее" || "N/A";
+            DtButton.setAttribute("data-bs-toggle", "modal");
+            DtButton.setAttribute("data-bs-target", "#exampleModal");
+            DtButton.setAttribute("onclick", `fetchParticipantDetails('${data.left_child.right_child.participant_id}')`);
+
+
+            const ABgColor = document.getElementById('a.left_child.right_child.participant_personal_number');
+            ABgColor.style.background = `linear-gradient(${data.left_child.right_child.color})`;
+            const DivNameLastname = document.getElementById('left_child.right_child.participant_name_participant_lastname');
+            
+            DivNameLastname.addEventListener('click', async () => {
+                const rawData = `${data.left_child.right_child.participant_personal_number}${data.left_child.right_child.participant_id}${data.left_child.right_child.participant_id2}${salt}`;
+
+                // Генерация хеша
+                const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawData));
+                const securePath = Array.from(new Uint8Array(hashBuffer))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join('');
+
+                // Перенаправление после генерации
+                window.location.href = `/structure/${securePath}/${data.left_child.right_child.participant_id}/${securePath}${securePath}`;
+
+            });
+
+        }
     }
-    container.innerHTML = ''; // Очистка контейнера
 
-    const html = getParticipantCardHtml(participant);
-    container.innerHTML = html;
+    // Populate right child
+    if (data.right_child) {
+        document.getElementById("right_child.participant_name").textContent = data.right_child.participant_name || "N/A";
+        document.getElementById("right_child.participant_lastname").textContent = data.right_child.participant_lastname || "N/A";
+
+        const rootButton = document.getElementById('right_child.participant_personal_number');
+        rootButton.textContent = data.right_child.participant_personal_number || "N/A";
+        // rootButton.setAttribute("data-bs-toggle", "modal");
+        // rootButton.setAttribute("data-bs-target", "#participantModal");
+        // rootButton.setAttribute("onclick", `loadParticipantDetails('${data.right_child.participant_id}')`);
+
+        const DtButton = document.getElementById('dt.right_child.participant_personal_number');
+        DtButton.textContent = "Подробнее" || "N/A";
+        DtButton.setAttribute("data-bs-toggle", "modal");
+        DtButton.setAttribute("data-bs-target", "#exampleModal");
+        DtButton.setAttribute("onclick", `fetchParticipantDetails('${data.right_child.participant_id}')`);
+
+        const ABgColor = document.getElementById('a.right_child.participant_personal_number');
+        ABgColor.style.background = `linear-gradient(${data.right_child.color})`;
+        const DivNameLastname = document.getElementById('right_child.participant_name_participant_lastname');
+        
+        DivNameLastname.addEventListener('click', async () => {
+                const rawData = `${data.right_child.participant_personal_number}${data.right_child.participant_id}${data.right_child.participant_id2}${salt}`;
+
+                // Генерация хеша
+                const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawData));
+                const securePath = Array.from(new Uint8Array(hashBuffer))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join('');
+
+                // Перенаправление после генерации
+                window.location.href = `/structure/${securePath}/${data.right_child.participant_id}/${securePath}${securePath}`;
+
+        });
+
+
+        // Populate right child's children
+        if (data.right_child.left_child) {
+            document.getElementById("right_child.left_child.participant_name").textContent = data.right_child.left_child.participant_name || "N/A";
+            document.getElementById("right_child.left_child.participant_lastname").textContent = data.right_child.left_child.participant_lastname || "N/A";
+
+            const rootButton = document.getElementById('right_child.left_child.participant_personal_number');
+            rootButton.textContent = data.right_child.left_child.participant_personal_number || "N/A";
+            // rootButton.setAttribute("data-bs-toggle", "modal");
+            // rootButton.setAttribute("data-bs-target", "#participantModal");
+            // rootButton.setAttribute("onclick", `loadParticipantDetails('${data.right_child.left_child.participant_id}')`);
+
+            const DtButton = document.getElementById('dt.right_child.left_child.participant_personal_number');
+            DtButton.textContent = "Подробнее" || "N/A";
+            DtButton.setAttribute("data-bs-toggle", "modal");
+            DtButton.setAttribute("data-bs-target", "#exampleModal");
+            DtButton.setAttribute("onclick", `fetchParticipantDetails('${data.right_child.left_child.participant_id}')`);
+
+            const ABgColor = document.getElementById('a.right_child.left_child.participant_personal_number');
+            ABgColor.style.background = `linear-gradient(${data.right_child.left_child.color})`;
+            const DivNameLastname = document.getElementById('right_child.left_child.participant_name_participant_lastname');
+            
+            DivNameLastname.addEventListener('click', async () => {
+                const rawData = `${data.right_child.left_child.participant_personal_number}${data.right_child.left_child.participant_id}${data.right_child.left_child.participant_id2}${salt}`;
+
+                // Генерация хеша
+                const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawData));
+                const securePath = Array.from(new Uint8Array(hashBuffer))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join('');
+
+                // Перенаправление после генерации
+                window.location.href = `/structure/${securePath}/${data.right_child.left_child.participant_id}/${securePath}${securePath}`;
+
+        });
+
+        }
+
+        if (data.right_child.right_child) {
+            document.getElementById("right_child.right_child.participant_name").textContent = data.right_child.right_child.participant_name || "N/A";
+            document.getElementById("right_child.right_child.participant_lastname").textContent = data.right_child.right_child.participant_lastname || "N/A";
+
+            const rootButton = document.getElementById('right_child.right_child.participant_personal_number');
+            rootButton.textContent = data.right_child.right_child.participant_personal_number || "N/A";
+            // rootButton.setAttribute("data-bs-toggle", "modal");
+            // rootButton.setAttribute("data-bs-target", "#participantModal");
+            // rootButton.setAttribute("onclick", `loadParticipantDetails('${data.right_child.right_child.participant_id}')`);
+
+            const DtButton = document.getElementById('dt.right_child.right_child.participant_personal_number');
+            DtButton.textContent = "Подробнее" || "N/A";
+            DtButton.setAttribute("data-bs-toggle", "modal");
+            DtButton.setAttribute("data-bs-target", "#exampleModal");
+            DtButton.setAttribute("onclick", `fetchParticipantDetails('${data.right_child.right_child.participant_id}')`);
+
+            const ABgColor = document.getElementById('a.right_child.right_child.participant_personal_number');
+            ABgColor.style.background = `linear-gradient(${data.right_child.right_child.color})`;
+            const DivNameLastname = document.getElementById('right_child.right_child.participant_name_participant_lastname');
+            
+            DivNameLastname.addEventListener('click', async () => {
+                const rawData = `${data.right_child.right_child.participant_personal_number}${data.right_child.right_child.participant_id}${data.right_child.right_child.participant_id2}${salt}`;
+
+                // Генерация хеша
+                const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawData));
+                const securePath = Array.from(new Uint8Array(hashBuffer))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join('');
+
+                // Перенаправление после генерации
+                window.location.href = `/structure/${securePath}/${data.right_child.right_child.participant_id}/${securePath}${securePath}`;
+
+        });
+
+        }
+    }
 }
-
-function getParticipantCardHtml(participant) {
-    if (!participant) return '';
-
-    const {participant_id, participant_name, participant_lastname, participant_personal_number, left_child, right_child } = participant;
-
-    // Создание HTML для текущего участника
-    const participantHtml = `
-        <div class="card col-4 mx-auto">
-            <div class="card-body text-center">
-                <h6>${participant_name} ${participant_lastname}</h6>
-                <button class="btn btn-light mt-1" data-bs-toggle="modal" data-bs-target="#participantModal" onclick="loadParticipantDetails('${participant_id}')">${participant_personal_number}</button>
-                <button class="btn btn-light mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal"  onclick="fetchParticipantDetails('${participant_id}')">Подробнее</button>
-            </div>
-        </div>
-    `;
-
-    // Рекурсивное создание HTML для детей
-    const leftChildHtml = left_child ? getParticipantCardHtml(left_child) : '';
-    const rightChildHtml = right_child ? getParticipantCardHtml(right_child) : '';
-
-    const href = participant_id === id ? '' : `/structure/${participant_id}`;
-
-    return `
-        <div class="row mt-5">
-            <a href="${href}">
-                ${participantHtml}
-                ${leftChildHtml}
-                ${rightChildHtml}
-            </a>
-        </div>
-    `;
-}
-
-// Вызов fetchParticipants при загрузке страницы
-document.addEventListener('DOMContentLoaded', fetchParticipants);
-
+// Call the function to fetch and populate data
+fetchParticipants();
 </script>
 
+
+<style>
+/*----------------genealogy-scroll----------*/
+.btn{
+    padding: 0 !important;
+}
+.genealogy-scroll::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+}
+.genealogy-scroll::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #e4e4e4;
+}
+.genealogy-scroll::-webkit-scrollbar-thumb {
+    background: #212121;
+    border-radius: 10px;
+    transition: 0.5s;
+}
+.genealogy-scroll::-webkit-scrollbar-thumb:hover {
+    background: #d5b14c;
+    transition: 0.5s;
+}
+
+
+/*----------------genealogy-tree----------*/
+.genealogy-body{
+    white-space: nowrap;
+    overflow-y: hidden;
+    padding: 50px;
+    min-height: 500px;
+    padding-top: 10px;
+    text-align: center;
+}
+.genealogy-tree{
+  display: inline-block;
+}
+.genealogy-tree ul {
+    padding-top: 20px; 
+    position: relative;
+    padding-left: 0px;
+    display: flex;
+    justify-content: center;
+}
+.genealogy-tree li {
+    float: left; text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 5px 0 5px;
+}
+.genealogy-tree li::before, .genealogy-tree li::after{
+    content: '';
+    position: absolute; 
+  top: 0; 
+  right: 50%;
+    border-top: 2px solid #ccc;
+    width: 50%; 
+  height: 18px;
+}
+.genealogy-tree li::after{
+    right: auto; left: 50%;
+    border-left: 2px solid #ccc;
+}
+.genealogy-tree li:only-child::after, .genealogy-tree li:only-child::before {
+    display: none;
+}
+.genealogy-tree li:only-child{ 
+    padding-top: 0;
+}
+.genealogy-tree li:first-child::before, .genealogy-tree li:last-child::after{
+    border: 0 none;
+}
+.genealogy-tree li:last-child::before{
+    border-right: 2px solid #ccc;
+    border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+}
+.genealogy-tree li:first-child::after{
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+}
+.genealogy-tree ul ul::before{
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    border-left: 2px solid #ccc;
+    width: 0; height: 20px;
+}
+.genealogy-tree li a{
+    text-decoration: none;
+    color: #666;
+    font-family: arial, verdana, tahoma;
+    font-size: 11px;
+    display: inline-block;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+}
+
+.genealogy-tree li a:hover, 
+.genealogy-tree li a:hover+ul li a {
+	background: #ffffff;
+	color: #fbba00;
+}
+
+.genealogy-tree li a:hover+ul li::after, 
+.genealogy-tree li a:hover+ul li::before, 
+.genealogy-tree li a:hover+ul::before, 
+.genealogy-tree li a:hover+ul ul::before{
+    border-color:  #fbba00;
+}
+
+/*--------------memeber-card-design----------*/
+
+.member-view-box{
+    padding: 20px;
+    text-align: center;
+    border-radius: 20px;
+    position: relative;
+    border: 1px;
+    border-color: #e4e4e4;
+    border-style: solid;
+}
+
+.member-header {
+  padding: 5px 0;
+  text-align: center;
+  background: #345;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 4px 4px 0 0;
+}
+.member-footer {
+  text-align: center;
+}
+.member-footer div.name {
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.name {
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.member-footer div.downline {
+  color: #000;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 450px) {
+    .member-footer div.name {
+        color: #ffffff;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+    .name {
+        color: #ffffff;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+    .member-view-box{
+        padding: 10px;
+        text-align: center;
+        border-radius: 20px;
+        position: relative;
+        border: 1px;
+        border-color: #e4e4e4;
+        border-style: solid;
+    }
+}
+
+</style>
 {% endblock %}

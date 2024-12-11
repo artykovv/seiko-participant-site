@@ -1,24 +1,22 @@
-from fastapi import APIRouter, Request, Response
+import hashlib
+from fastapi import APIRouter, HTTPException, Request, Response
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
 
+import base64
+from Crypto.Cipher import AES
+import os
+
+
 from functions import validate_token
-from config import site_url_and_port
+from config import site_url_and_port, key
 
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
 
 
-@router.get("/download")
-async def download_file():
-    # Путь к файлу, который нужно скачать
-    file_path = "file/sanctions.pdf"
-    
-    # Параметр `media_type` указывает MIME-тип файла, 
-    # а параметр `filename` задает имя файла, которое будет видно пользователю
-    return FileResponse(path=file_path, media_type='application/octet-stream', filename="sanctions.pdf")
 
 
 @router.get("/login")
@@ -105,12 +103,14 @@ async def page_(request: Request):
             "request": request,
             "title": "Структура",
             "token": session_key,
+            "key": key,
             "current_path": request.url.path,
             "site_url_and_port": site_url_and_port
         }
     )
 
-@router.get("/structure/{id}/")
+
+@router.get("/structure/{securePath}/{id}/{securePath2}{securePath3}")
 async def page_(id: int, request: Request):
     session_key = request.cookies.get("Bearer")
     if session_key is None:
@@ -119,7 +119,7 @@ async def page_(id: int, request: Request):
     status = await validate_token(session_key)
     if status != 200:
         return RedirectResponse(url="/login")
-    
+
     return templates.TemplateResponse(
         "structure_one.html",
          {
@@ -127,7 +127,8 @@ async def page_(id: int, request: Request):
             "title": "Структура",
             "token": session_key,
             "id": id,
-            "current_path": request.url.path,
+            "key": key,
+            "current_path": "/structure",
             "site_url_and_port": site_url_and_port
         }
     )
@@ -257,7 +258,7 @@ async def page_(request: Request):
             "request": request,
             "title": "Бинар",
             "token": session_key,
-            "current_path": request.url.path,
+            "current_path": "/rewards",
             "site_url_and_port": site_url_and_port
         }
     )
@@ -278,7 +279,7 @@ async def page_(request: Request):
             "request": request,
             "title": "Вознаграждения",
             "token": session_key,
-            "current_path": request.url.path,
+            "current_path": "/rewards",
             "site_url_and_port": site_url_and_port
         }
     )
@@ -299,7 +300,7 @@ async def page_(request: Request):
             "request": request,
             "title": "Вознаграждения",
             "token": session_key,
-            "current_path": request.url.path,
+            "current_path": "/rewards",
             "site_url_and_port": site_url_and_port
         }
     )
@@ -320,7 +321,7 @@ async def page_(request: Request):
             "request": request,
             "title": "Вознаграждения",
             "token": session_key,
-            "current_path": request.url.path,
+            "current_path": "/rewards",
             "site_url_and_port": site_url_and_port
         }
     )
@@ -342,7 +343,33 @@ async def page_(request: Request):
             "request": request,
             "title": "Вознаграждения",
             "token": session_key,
-            "current_path": request.url.path,
+            "current_path": "/rewards",
             "site_url_and_port": site_url_and_port
         }
     )
+
+
+@router.get("/sanctions")
+async def sanctions_page(request: Request):
+    session_key = request.cookies.get("Bearer")
+    if session_key is None:
+        return RedirectResponse(url="/login")
+    
+    status = await validate_token(session_key)
+    if status != 200:
+        return RedirectResponse(url="/login")
+    
+    return templates.TemplateResponse(
+        "sanctions.html",
+        {
+            "request": request,
+            "title": "Cанкции",
+            "token": session_key,
+            "current_path": "/sanctions",
+        }
+    )
+
+@router.get("/sanctions/file")
+async def sanctions_file():
+    file_path = "file/sanctions.pdf"  # Укажите путь к вашему PDF
+    return FileResponse(file_path, media_type="application/pdf")

@@ -1,55 +1,55 @@
+<div>
 
-
-<div class="col-12 mb-3 col-sm-8">
-    <div class="card">
-        <div class="card-body text-center">
-            <p class="text-secondary small mb-2">ВСЕ БОНУСЫ</p>
-            <h4 id="total-bonuses" class="mb-3"></h4>
+    <div>
+        <div class="card">
+            <div class="card-body text-center">
+                <p class="text-secondary small mb-2 fs-3">ВСЕ БОНУСЫ</p>
+                <h3 id="total-bonuses" class="mb-3"></h3>
+            </div>
         </div>
-    </div>    
-</div>
 
-<div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-3">
-    <div class="card adminuiux-card">
-        <div class="card-body">
-            <p class="text-secondary small mb-2">За предыдущий</p>
-            <h2 id="previous-month-bonus" class="mb-3"></h2>
+        <div class="d-flex mt-3">
+            <div class="card me-3 w-100">
+                <div class="card-body text-center">
+                    <p class="text-secondary small mb-2 fs-3">За предыдущий</p>
+                    <h3 id="previous-month-bonus" class="mb-3"></h3>
+                </div>
+            </div>
+
+            <div class="card ms-3 w-100">
+                <div class="card-body text-center">
+                    <p class="text-secondary small mb-2 fs-3">За текущий</p>
+                    <h3 id="current-month-bonus" class="mb-3"></h3>
+                </div>
+            </div>
         </div>
+
+        <div class="card mt-3">
+            <div class="card-body text-center">
+
+                <p class="text-secondary small mb-2 fs-3">До следующего Статуса</p>
+                <p class="text-secondary small mb-2 fs-3">ТО малой ветки</p>
+                <h3 id="next-status-name" class="mb-3"></h3>
+                <h3 id="required-turnover-status" class="mb-3"></h3>
+
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body text-center">
+                <p class="text-secondary small mb-2 fs-3">До следующего Бонуса</p>
+                <h4 id="next-bonus-name" class="mb-3"></h4>
+                <h4 class="mb-3"><strong id="required-turnover-bonus"></strong></h4>
+                <h4 class="mb-3">Остаток ТО для достижения: <span id="turnover-r"></span></h4>
+                <p class="fs-3">ТО в левой: <strong id="left_volume"></strong></p>
+                <p class="fs-3">ТО в левой: <strong id="right_volume"></strong></p>
+            </div>
+        </div>
+
     </div>
+
 </div>
 
-<div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-3">
-    <div class="card adminuiux-card">
-        <div class="card-body">
-            <p class="text-secondary small mb-2">За текущий</p>
-            <h2 id="current-month-bonus" class="mb-3"></h2>
-        </div>
-    </div>
-</div>
-
-<div class="col-12 mb-3 col-sm-8">
-    <div class="card">
-        <div class="card-body text-center">
-            <p class="text-secondary small mb-2">До следующего Статуса</p>
-            <p class="text-secondary small mb-2">ТО малой ветки</p>
-            <h4 id="next-status-name" class="mb-3"></h4>
-            <h4 id="required-turnover-status" class="mb-3"></h4>
-        </div>
-    </div>    
-</div>
-
-<div class="col-12 mb-3 col-sm-8">
-    <div class="card">
-        <div class="card-body text-center">
-            <p class="text-secondary small mb-2">До следующего Бонуса</p>
-            <h4 id="next-bonus-name" class="mb-3"></h4>
-            <h4 id="required-turnover-bonus" class="mb-3"></h4>
-            <h4 class="mb-3">Остаток ТО для достижения: <span id="turnover-r"></span></h4>
-            <p>ТО в левой: <span id="left_volume"></span></p>
-            <p>ТО в левой: <span id="right_volume"></span></p>
-        </div>
-    </div>    
-</div>
 
 <script>
     const SiteUrl2 = "{{ site_url_and_port }}";

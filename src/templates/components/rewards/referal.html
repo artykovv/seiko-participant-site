@@ -6,18 +6,18 @@
 </div>
 
 <div class="d-flex flex-wrap justify-content-evenly">
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/binar">Бинар бонус</a>
+    <a class="btn btn-primary btn-lg mt-3"  style="background-color: #000080;" href="/rewards/binar">Бинар бонус</a>
     <button type="button" class="btn btn-outline-primary btn-lg mt-3" disabled>Реферальные</button>
 
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/cheque">Чек от чека</a>
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/status">Статусные</a>
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/sponsor">Спонсорские</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/cheque">Чек от чека</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/status">Статусные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/sponsor">Спонсорские</a>
 </div>
 
 <div class="round card mt-5">
     <div class="card-body">
 
-        <table class="table" style="height: 100vh;">
+        <table class="table fs-3" style="height: 100vh;">
             <thead>
               <tr>
                 <th scope="col">Бонус</th>
@@ -29,6 +29,9 @@
           </table>
     </div>
 </div>
+
+{% include 'components/modals/personal_num_modal.html' %}
+
 
 <script>
   const SiteUrl = "{{ site_url_and_port }}";  // Адрес сайта
@@ -67,7 +70,10 @@
   
           row.innerHTML = `
               <td>${item.amount}</td>
-              <td>${item.from_participant.personal_number}</td>
+              <td>
+                <a class="link" data-bs-toggle="modal" data-bs-target="#participantModal" onclick="loadParticipantDetails('${item.from_participant.id}')">${item.from_participant.personal_number}</a>
+                </td>
+                
               <td>${new Date(item.created_at).toLocaleDateString()}</td>
           `;
   
@@ -79,4 +85,10 @@
 document.addEventListener('DOMContentLoaded', fetchBonusData);
 </script>
 
+<style>
+    .btn:disabled{
+        border-color: #000080;
+        color: #000080;
+    }
+</style>
 {% endblock %}

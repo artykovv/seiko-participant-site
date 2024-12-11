@@ -6,15 +6,15 @@
 </div>
 
 <div class="d-flex flex-wrap justify-content-evenly">
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/binar">Бинар бонус</a>
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/referal">Реферальные</a>
+    <a class="btn btn-primary btn-lg mt-3"  style="background-color: #000080;" href="/rewards/binar">Бинар бонус</a>
+    <a class="btn btn-primary btn-lg mt-3"  style="background-color: #000080;" href="/rewards/referal">Реферальные</a>
     <button type="button" class="btn btn-outline-primary btn-lg mt-3" disabled>Чек от чека</button>
 
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/status">Статусные</a>
-    <a class="btn btn-primary btn-lg mt-3" href="/rewards/sponsor">Спонсорские</a>
+    <a class="btn btn-primary btn-lg mt-3"  style="background-color: #000080;" href="/rewards/status">Статусные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/sponsor">Спонсорские</a>
 </div>
 
-<div class="round card mt-5" style="height: 100vh;">
+<div class="round card mt-5 fs-3" style="height: 100vh;">
     <div class="card-body">
         <table class="table">
             <thead>
@@ -79,5 +79,12 @@
   // Загрузка данных при загрузке страницы
 document.addEventListener('DOMContentLoaded', fetchBonusData);
 </script>
+
+<style>
+    .btn:disabled{
+        border-color: #000080;
+        color: #000080;
+    }
+</style>
 
 {% endblock %}

@@ -6,7 +6,7 @@
                 <h1 class="modal-title fs-5" id="participantModalLabel">Детали участника</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
-            <div class="modal-body" id="participantDetails"></div>
+            <div class="modal-body fs-3" id="participantDetails"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
             </div>
@@ -40,7 +40,7 @@
                 <br>
                 <p>${participant.name} ${participant.lastname} ${participant.patronymic || ''}</p>
     
-                <p><strong>Пакет:</strong> ${participant.paket ? participant.paket.name + ' ($' + participant.paket.price + ')' : 'Не указано'}</p>
+                <p><strong>Пакет:</strong> ${participant.paket ? participant.paket.name : 'Не указано'}</p>
                 <p><strong>Спонсор:</strong> ${participant.sponsor ? participant.sponsor.name + ' ' + participant.sponsor.lastname + ' ' + participant.sponsor.personal_number: 'Не указано'}</p>
                 <p><strong>Наставник:</strong> ${participant.mentor ? participant.mentor.name + ' ' + participant.mentor.lastname : 'Не указано'}</p>
     

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center mt-5">
+    <h1>Санкции</h1>
+</div>
+
+<div class="card mt-5">
+    <div class="card-body">
+        <div id="pdf-viewer" class="text-center">
+            <canvas id="pdf-canvas" style="max-width: 100%; height: auto;"></canvas>
+        </div>
+
+        <div class="d-flex justify-content-center mt-3">
+            <!-- Мобильная адаптация: уменьшение размера кнопок на маленьких экранах -->
+            <button id="prev-page" class="btn btn-primary btn-lg me-2 btn-block d-block d-md-inline">Предыдущая</button>
+            <button id="next-page" class="btn btn-primary btn-lg btn-block d-block d-md-inline">Следующая</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+<script>
+    const url = '/sanctions/file'; // URL к вашему PDF
+
+    let currentPage = 1;
+    let pdfDoc = null;
+    const canvas = document.getElementById('pdf-canvas');
+    const context = canvas.getContext('2d');
+
+    // Загружаем PDF
+    const loadingTask = pdfjsLib.getDocument(url);
+    loadingTask.promise.then((pdf) => {
+        pdfDoc = pdf;
+        renderPage(currentPage);
+    }).catch((error) => {
+        console.error('Error loading PDF:', error);
+    });
+
+    // Функция для рендеринга страницы
+    function renderPage(pageNum) {
+        pdfDoc.getPage(pageNum).then((page) => {
+            const viewport = page.getViewport({ scale: 1.5 });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport,
+            };
+            page.render(renderContext);
+        });
+    }
+
+    // Обработчики кнопок
+    document.getElementById('next-page').addEventListener('click', () => {
+        if (currentPage < pdfDoc.numPages) {
+            currentPage++;
+            renderPage(currentPage);
+        }
+    });
+
+    document.getElementById('prev-page').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage(currentPage);
+        }
+    });
+</script>
+{% endblock %}

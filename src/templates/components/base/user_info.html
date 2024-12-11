@@ -1,69 +1,75 @@
-<div class="col-12 mb-3 col-sm-8">
+<div>
+
     <div class="card">
         <div class="card-body text-center">
+
             <div class="mt-5">
-                <div class="rounded-circle d-flex justify-content-center" style="background-color: blue; width: 200px; height: 200px; margin: auto;">
+                <div class="rounded-circle d-flex justify-content-center" style="background-color: #000080; width: 200px; height: 200px; margin: auto;">
                     <h1 id="initials" class="align-self-center" style="color: #fff;"></h1>
                 </div>
             </div>
 
-            <h4 id="full-name" class="mt-5"></h4>
-            <h6 id="personal-number" class="fw-normal mb-0 text-secondary"></h6>
-            <h6 id="paket-name" class="fw-normal mb-0 text-secondary mt-5"></h6>
+            <h1 id="full-name" class="mt-5"></h1>
+
+            <div class="d-flex mt-5 justify-content-center align-items-center">
+                <span id="personal-number" class="fw-normal text-secondary fs-2"></span>
+
+                <svg class="ms-3" id="copy-button" class="mt-5" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="50" height="50" rx="10" fill="#000080"/>
+                    <path d="M14.7344 20.4437L10.4469 24.7313C8.68857 26.4896 7.70077 28.8743 7.70077 31.3609C7.70077 33.8476 8.68857 36.2323 10.4469 37.9906C12.2052 39.7489 14.5899 40.7367 17.0766 40.7367C19.5632 40.7367 21.9479 39.7489 23.7062 37.9906L29.4187 32.275C30.479 31.2146 31.2695 29.9152 31.7237 28.4861C32.178 27.0569 32.2827 25.5397 32.0293 24.0617C31.7758 22.5837 31.1714 21.188 30.267 19.9919C29.3625 18.7958 28.1843 17.8341 26.8313 17.1875L25 19.0187C24.814 19.205 24.6523 19.4139 24.5188 19.6406C25.5641 19.9412 26.513 20.5093 27.2715 21.2889C28.0301 22.0686 28.572 23.0326 28.8438 24.0859C29.1155 25.1391 29.1077 26.2451 28.821 27.2943C28.5344 28.3436 27.9789 29.2999 27.2094 30.0687L21.5 35.7812C20.3272 36.954 18.7367 37.6128 17.0781 37.6128C15.4196 37.6128 13.829 36.954 12.6563 35.7812C11.4835 34.6085 10.8246 33.0179 10.8246 31.3594C10.8246 29.7008 11.4835 28.1103 12.6563 26.9375L15.1344 24.4625C14.7838 23.1525 14.6487 21.7972 14.7344 20.4437Z" fill="white"/>
+                    <path d="M20.5812 14.6C19.521 15.6604 18.7305 16.9598 18.2763 18.3889C17.822 19.8181 17.7173 21.3353 17.9707 22.8133C18.2242 24.2913 18.8286 25.687 19.733 26.8831C20.6375 28.0792 21.8157 29.0409 23.1687 29.6875L25.5906 27.2625C24.5311 26.9783 23.565 26.4202 22.7895 25.6444C22.014 24.8685 21.4563 23.9022 21.1725 22.8426C20.8888 21.7829 20.8889 20.6672 21.173 19.6076C21.457 18.5481 22.0149 17.5819 22.7906 16.8063L28.5 11.0938C29.6728 9.921 31.2633 9.26215 32.9219 9.26215C34.5804 9.26215 36.171 9.921 37.3437 11.0938C38.5165 12.2665 39.1753 13.8571 39.1753 15.5156C39.1753 17.1742 38.5165 18.7647 37.3437 19.9375L34.8656 22.4125C35.2156 23.725 35.35 25.0844 35.2656 26.4344L39.5531 22.1469C41.3114 20.3886 42.2992 18.0038 42.2992 15.5172C42.2992 13.0306 41.3114 10.6458 39.5531 8.8875C37.7948 7.1292 35.4101 6.1414 32.9234 6.1414C30.4368 6.1414 28.0521 7.1292 26.2937 8.8875L20.5812 14.6Z" fill="white"/>
+                </svg>
+            </div>
+                
+                    
+            <div id="notifcation" class="mt-2"></div>
+            <h2 id="paket-name" class="fw-normal mb-0 text-secondary mt-5"></h2>
 
             <div class="round mt-5">
                 <div class="">
-                    <table class="table">
+                    <table class="table fs-3">
                         <thead>
-                          <tr>
+                        <tr>
                             <th scope="col">ТО правой</th>
                             <th scope="col">ТО левой</th>
-                          </tr>
+                        </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                        <tr>
                             <td id="right-volume"></td>
                             <td id="left-volume"></td>
-                          </tr>    
+                        </tr>    
                         </tbody>
-                      </table>
+                    </table>
                 </div>
             </div>
+
         </div>
-    </div>    
-</div>
+    </div>
 
 
-<div class="col-12 mb-3 col-sm-8">
-    <div class="card">
-        <div class="card-body text-center">
-            <p class="text-secondary small mb-2">Реферальная ссылка</p>
-            <div class="d-grid gap-2 mt-5 mb-5">
-                <input id="referal-link" class="form-control form-control-lg" type="text" value="d" aria-label="Disabled input example" disabled readonly>
-                <button  id="copy-button" class="btn btn-primary mt-2 btn-lg">Копировать</button>
+    <div class="mt-5 mb-5 d-flex">
+
+        <div class="card me-3 w-100">
+            <div class="card-body text-center">
+                <p class="text-secondary small mb-2 fs-3">Текущий месяц</p>
+                <h3 class="mb-3 fs-3" id="datetime"></h3>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-3">
-    <div class="card adminuiux-card text-center">
-        <div class="card-body">
-            <p class="text-secondary small mb-2">Текущий месяц</p>
-            <h3 class="mb-3" id="datetime"></h3>
+        <div class="card ms-3 w-100">
+            <div class="card-body text-center">
+                <p class="text-secondary small mb-2 fs-3">Статус</p>
+                    <h3 class="mb-3 fs-3" id="status"></h3>
+            </div>
         </div>
+
     </div>
+
 </div>
 
 
-<div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-3">
-    <div class="card adminuiux-card text-center">
-        <div class="card-body">
-            <p class="text-secondary small mb-2">Статус</p>
-            <h3 class="mb-3" id="status">$13.20k</h3>
-        </div>
-    </div>
-</div>
+
 
 <script>
     const SiteUrl = "{{ site_url_and_port }}";
@@ -99,29 +105,44 @@
         document.getElementById('datetime').textContent = `${month} ${year}`;
         document.getElementById('status').textContent = data.status.name.toUpperCase();;
 
+        // Set background color dynamically based on paket color
+        const circleElement = document.querySelector('.rounded-circle');
+        circleElement.style.backgroundColor = data.paket.color; 
+
         // Generate referral link
         const baseUrl = window.location.origin;
         const referralLink = `${baseUrl}/referral_register/${data.id}_personal_number${data.personal_number}`;
-        document.getElementById('referal-link').value = referralLink; // Set the value of the input field
+
+       // Handle copy button click
+        document.getElementById('copy-button').addEventListener('click', () => {
+            // Copy the referral link to clipboard
+            navigator.clipboard.writeText(referralLink)
+                .then(() => {
+                    console.log('Referral link copied to clipboard');
+
+                    // Create the success alert dynamically
+                    const notification = document.getElementById('notifcation');
+                    notification.innerHTML = `
+                        <div class="alert alert-success fs-3" role="alert">
+                            Реферальная ссылка скопирована!
+                        </div>
+                    `;
+
+                    // Show the alert
+                    notification.style.display = 'block'; 
+
+                    // Hide the alert after 3 seconds
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error('Error copying referral link:', error);
+                });
+        });
     })
     .catch(error => console.error('Error fetching user data:', error));
 
-      // Функция копирования текста
-      document.getElementById('copy-button').addEventListener('click', () => {
-        // Получение значения из поля input
-        const referralLink = document.getElementById('referal-link').value;
-
-        // Копирование значения в буфер обмена
-        navigator.clipboard.writeText(referralLink)
-            .then(() => {
-                // Успешное копирование: уведомление пользователя
-                alert('Реферальная ссылка скопирована!');
-            })
-            .catch(err => {
-                // Ошибка копирования
-                console.error('Ошибка копирования: ', err);
-                alert('Не удалось скопировать ссылку. Пожалуйста, попробуйте снова.');
-            });
-    });
+    
 
 </script>
