@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container widget-flat card p-5 mt-5">
+<div class="container widget-flat card p-3 mt-5">
 
-    <h5 class="fw-normal mt-0 text-muted mb-5" title="Number of Customers">Регистрация</h5>
+
+    <h5 class="fw-normal mt-0 text-center fs-1 mb-5" title="Number of Customers">Регистрация</h5>
 
     <form>
 
@@ -161,15 +162,20 @@
             <label class="form-check-label" for="retireeCheck">Пенсионер</label>
         </div>
 
-        <div class="mt-5 d-flex justify-content-end">
-            <a class="btn btn-secondary" href="/registrations">Назад</a>
-            <button type="button" class="btn btn-success ms-4" id="saveButton">Сохранить</button>
-        </div>
-
     </form>
 
 </div>
 
+<label class="p-2">
+    <input type="checkbox" style="height: 20px; width: 20px;" name="terms" required>
+    Я согласен с <a href="#" target="">Условиями пользовательского соглашения</a>.
+</label>
+
+  
+<div class="mt-5 mb-5 d-grid">
+    <button type="button"  style="background-color: #000080;" class="btn btn-primary btn-lg fs-4" id="saveButton">Зарегистрироваться</button>
+    <a href="/login" class="btn text-primary mt-3 fs-4">Войти</a>
+</div>
 
 
 

@@ -15,11 +15,12 @@
 
 <div class="round card mt-5" style="height: 100vh;">
     <div class="card-body">
-        <table class="table fs-3">
+        <table class="table fs-6">
             <thead>
               <tr>
                 <th scope="col">Бонус</th>
                 <th scope="col">От</th>
+                <th scope="col">ФИО</th>
                 <th scope="col">Дата</th>
               </tr>
             </thead>
@@ -27,6 +28,9 @@
           </table>
     </div>
 </div>
+
+{% include 'components/modals/personal_num_modal.html' %}
+
 
 <script>
   const SiteUrl = "{{ site_url_and_port }}";  // Адрес сайта
@@ -65,7 +69,10 @@
   
           row.innerHTML = `
               <td>${item.bonus_amount}</td>
-              <td>${item.from}</td>
+              <td>
+                    <a class="link" data-bs-toggle="modal" data-bs-target="#participantModal" onclick="loadParticipantDetails('${item.from_id}')">${item.from_personal_number}</a>
+                </td>
+              <td>${item.from_name} ${item.from_lastname}</td>
               <td>${new Date(item.created_at).toLocaleDateString()}</td>
           `;
   

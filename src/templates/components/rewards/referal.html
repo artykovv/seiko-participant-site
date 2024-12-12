@@ -17,11 +17,12 @@
 <div class="round card mt-5">
     <div class="card-body">
 
-        <table class="table fs-3" style="height: 100vh;">
+        <table class="table fs-6" style="height: 100vh;">
             <thead>
               <tr>
                 <th scope="col">Бонус</th>
                 <th scope="col">От</th>
+                <th scope="col">ФИО</th>
                 <th scope="col">Дата</th>
               </tr>
             </thead>
@@ -69,12 +70,12 @@
           const row = document.createElement('tr');
   
           row.innerHTML = `
-              <td>${item.amount}</td>
-              <td>
-                <a class="link" data-bs-toggle="modal" data-bs-target="#participantModal" onclick="loadParticipantDetails('${item.from_participant.id}')">${item.from_participant.personal_number}</a>
+                <td>${item.amount}</td>
+                <td>
+                    <a class="link" data-bs-toggle="modal" data-bs-target="#participantModal" onclick="loadParticipantDetails('${item.from_participant.id}')">${item.from_participant.personal_number}</a>
                 </td>
-                
-              <td>${new Date(item.created_at).toLocaleDateString()}</td>
+                <td>${item.from_participant.name} ${item.from_participant.lastname}</td>
+                <td>${new Date(item.created_at).toLocaleDateString()}</td>
           `;
   
           tbody.appendChild(row);

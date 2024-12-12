@@ -1,0 +1,62 @@
+
+    <form class="col-12 col-lg-auto mt-3 mb-lg-0 me-lg-3" role="search" onsubmit="return false;">
+        <input type="search" id="search-input" class="form-control form-control-lg" placeholder="Поиск..." aria-label="Search">
+    </form>
+    <div id="search-results" style="position: relative; z-index: 1000;" class="mt-3 mb-5 fs-4"></div>
+
+    <script>
+        // Функция для создания безопасного пути
+        async function generateSecurePath(data) {
+            const rawData = `${data.name}${data.lastname}${salt}`;
+            const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawData));
+            return Array.from(new Uint8Array(hashBuffer))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
+        }
+
+        // Обработчик ввода
+        document.getElementById('search-input').addEventListener('input', async function () {
+            const query = this.value.trim();
+            const resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = ''; // Очистить предыдущие результаты
+
+            if (query.length > 2) { // Начать поиск только если введено больше 2 символов
+                try {
+                    const response = await fetch(`${SiteUrl}/search/participants?query=${encodeURIComponent(query)}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (response.ok) {
+                        const participants = await response.json();
+                        if (participants.length > 0) {
+                            const list = document.createElement('ul');
+                            list.className = 'list-group';
+                            participants.forEach(async participant => {
+                                const listItem = document.createElement('li');
+                                listItem.className = 'list-group-item';
+                                listItem.textContent = `${participant.name} ${participant.lastname} (${participant.personal_number})`;
+
+                                // Сделать элемент кликабельным
+                                listItem.addEventListener('click', async () => {
+                                    const securePath = await generateSecurePath(participant);
+                                    const participantId = participant.id;
+                                    window.location.href = `/structure/${securePath}/${participantId}/${securePath}${securePath}`;
+                                });
+
+                                list.appendChild(listItem);
+                            });
+                            resultsContainer.appendChild(list);
+                        } else {
+                            resultsContainer.textContent = 'Нет результатов';
+                        }
+                    } else {
+                        resultsContainer.textContent = 'Ошибка при выполнении поиска';
+                    }
+                } catch (error) {
+                    console.error('Ошибка поиска:', error);
+                    resultsContainer.textContent = 'Не удалось выполнить запрос';
+                }
+            }
+        });
+    </script>

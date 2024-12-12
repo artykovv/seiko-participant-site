@@ -1,12 +1,18 @@
 
 {% extends "base.html" %}
 {% block content %}
+<div class="d-flex justify-content-end">
+    <div class="card p-1 mt-1">
+        <span class="fs-4"><strong>1$ = 85c</strong></span>
+    </div>
+</div>
 
 <div class="text-center mt-5">
     <h1>Организация</h1>
 </div>
 
 {% include 'components/modals/to_data_modal.html' %}
+{% include 'components/search.html' %}
 
 
 <div class="card body genealogy-body genealogy-scroll">
@@ -148,7 +154,7 @@
 <script>
 const SiteUrl = "{{ site_url_and_port }}"; 
 const id = "{{ id }}"
-const apiUrl = `${SiteUrl}/children/${id}/`; 
+const apiUrl = `${SiteUrl}/children/${id}`; 
 const token = "{{ token }}";  
 const salt = "{{ token }}";  
 

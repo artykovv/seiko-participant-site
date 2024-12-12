@@ -1,6 +1,11 @@
 
 {% extends "base.html" %}
 {% block content %}
+<div class="d-flex justify-content-end">
+    <div class="card p-1 mt-1">
+        <span class="fs-4"><strong>1$ = 85c</strong></span>
+    </div>
+</div>
 
 <div class="text-center mt-5">
     <h1>Организация</h1>
@@ -8,12 +13,12 @@
 
 {% include 'components/modals/to_data_modal.html' %}
 
+{% include 'components/search.html' %}
 
 <div class="card body genealogy-body genealogy-scroll">
     <div class="genealogy-tree">
 
-
-        <ul>
+        <ul class="mt-5">
             <li>
                 <a id="a.participant_personal_number">
                     <div class="member-view-box">
@@ -588,7 +593,7 @@ fetchParticipants();
   margin-bottom: 5px;
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 600px) {
     .member-footer div.name {
         color: #ffffff;
         font-size: 12px;

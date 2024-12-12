@@ -8,13 +8,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body fs-3">
+                <p>Пакет: <span id="paket"></span></p>
                 <p>Статус: <span id="status"></span></p>
-                <p>Количество участников</p>
-                <p>Левая ветка: <span id="left_branch"></span></p>
-                <p>Правая ветка: <span id="right_branch"></span></p>
-                <p>Общий ТО: <span id="total_turnover"></span></p>
-                <p>Левая ветка: <span id="left_total_turnover"></span></p>
-                <p>Правая ветка: <span id="right_total_turnover"></span></p>
+                <p >Количество участников</p>
+                <p class="fw-bold">Левая ветка: <span class="fw-bold" id="left_branch"></span></p>
+                <p class="fw-bold">Правая ветка: <span class="fw-bold" id="right_branch"></span></p>
+                <p >Общий ТО: <span id="total_turnover"></span></p>
+                <p class="fw-bold">Левая ветка: <span  id="left_total_turnover"></span></p>
+                <p class="fw-bold">Правая ветка: <span  id="right_total_turnover"></span></p>
                 <p>Количество личников: <span id="personal_count"></span></p>
                 <p>Бонус за бинар: <span id="binary_bonus"></span></p>
             </div>
@@ -44,7 +45,8 @@
             const data = await response.json();
 
             // Update the HTML with the fetched data
-            document.getElementById("status").innerText = data.paket || "Не указано";
+            document.getElementById("status").innerText = data.status || "Не указано";
+            document.getElementById("paket").innerText = data.paket || "Не указано";
             document.getElementById("left_branch").innerText = data.descendants.left_descendants || "0";
             document.getElementById("right_branch").innerText = data.descendants.right_descendants || "0";
 

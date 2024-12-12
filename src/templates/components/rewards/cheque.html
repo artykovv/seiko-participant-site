@@ -14,13 +14,14 @@
     <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/sponsor">Спонсорские</a>
 </div>
 
-<div class="round card mt-5 fs-3" style="height: 100vh;">
+<div class="round card mt-5 fs-6" style="height: 100vh;">
     <div class="card-body">
-        <table class="table">
+        <table class="table overflow-auto">
             <thead>
               <tr>
                 <th scope="col">Бонус</th>
                 <th scope="col">От</th>
+                <th scope="col">ФИО</th>
                 <th scope="col">Глубина</th>
                 <th scope="col">Дата</th>
               </tr>
@@ -29,6 +30,9 @@
           </table>
     </div>
 </div>
+
+{% include 'components/modals/personal_num_modal.html' %}
+
 
 <script>
   const SiteUrl = "{{ site_url_and_port }}";  // Адрес сайта
@@ -67,7 +71,11 @@
   
           row.innerHTML = `
               <td>${item.bonus_amount}</td>
-              <td>${item.from}</td>
+
+              <td>
+                    <a class="link" data-bs-toggle="modal" data-bs-target="#participantModal" onclick="loadParticipantDetails('${item.from_id}')">${item.from_personal_number}</a>
+                </td>
+              <td>${item.from_name} ${item.from_lastname}</td>
               <td>${item.depth}</td>
               <td>${new Date(item.created_at).toLocaleDateString()}</td>
           `;
