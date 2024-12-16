@@ -17,6 +17,8 @@
                 <p class="fw-bold">Левая ветка: <span  id="left_total_turnover"></span></p>
                 <p class="fw-bold">Правая ветка: <span  id="right_total_turnover"></span></p>
                 <p>Количество личников: <span id="personal_count"></span></p>
+
+
                 <p>Бонус за бинар: <span id="binary_bonus"></span></p>
             </div>
         </div>
@@ -54,12 +56,32 @@
             document.getElementById("right_total_turnover").innerText = data.right_volume || "0";
 
             document.getElementById("personal_count").innerText = data.sponsored || "0";
-            document.getElementById("binary_bonus").innerText = data.bonus_binar || "0";
         } catch (error) {
             console.error('Error fetching participant details:', error);
         }
+
+        try {
+            const response = await fetch(`${site}/bonus/binar-bonuse/calculate/${id}`,
+                {
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${token_modal}`,
+                    }
+                }
+            );
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const data = await response.json();
+
+            document.getElementById("binary_bonus").innerText = data.bonus || "0";
+
+        } catch (error) {
+            console.error('Error fetching participant details:', error);
+        }
+
     }
 
     // Fetch data on page load
-    document.addEventListener("DOMContentLoaded", fetchParticipantDetails);
+    document.addEventListener("DOMContentLoaded", fetchParticipantDetails(participantId));
 </script>
