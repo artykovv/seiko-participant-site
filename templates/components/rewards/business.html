@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mt-5">
+    <h1>Реферальные бонусы</h1>
+</div>
+
+<div class="d-flex flex-wrap justify-content-evenly">
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/binar">Бинар бонус</a>
+    
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/referal">Реферальные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/cheque">Чек от чека</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/status">Статусные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/sponsor">Спонсорские</a>
+    
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/surprise">Неожиданный бонус</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/tour">Туристический бонус</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/auto">Автопрограмма</a>
+    <button type="button" class="btn btn-outline-primary btn-lg mt-3"  disabled>Бизнес бонус</button>
+
+</div>
+
+<div class="round card mt-5" style="height: 100vh;">
+    <div class="card-body">
+
+        <p class="text-center mt-5 fs-4">Вид дохода который дает возможность удваивать товарооборот.</p>
+        <p class="text-center mt-5 fs-4">Пример: <strong>20.000$</strong> в месяц, в рамках <strong>БИЗНЕС ПРОМОУШЕНА ВАШ</strong> товарооборот удваивается на <strong>х2.</strong></p>
+        <p class="text-center mt-5 fs-4">Таким образом, в просчете в системе у вас будут <strong>40.000$.</strong> Подробнее следите за новостями и обращайтесь вашим спонсорам.</p>
+       
+    </div>
+</div>
+
+
+
+
+{% endblock %}

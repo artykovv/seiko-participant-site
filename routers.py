@@ -408,6 +408,26 @@ async def page_(request: Request):
         }
     )
 
+@router.get("/rewards/business")
+async def page_(request: Request):
+    session_key = request.cookies.get("Bearer")
+    if session_key is None:
+        return RedirectResponse(url="/login")
+    
+    status = await validate_token(session_key)
+    if status != 200:
+        return RedirectResponse(url="/login")
+    
+    return templates.TemplateResponse(
+        "components/rewards/business.html",
+         {
+            "request": request,
+            "title": "Бизнес",
+            "token": session_key,
+            "current_path": "/rewards",
+            "site_url_and_port": site_url_and_port
+        }
+    )
 
 @router.get("/sanctions")
 async def sanctions_page(request: Request):
@@ -432,4 +452,31 @@ async def sanctions_page(request: Request):
 @router.get("/sanctions/file")
 async def sanctions_file():
     file_path = "file/sanctions.pdf"  # Укажите путь к вашему PDF
+    return FileResponse(file_path, media_type="application/pdf")
+
+
+@router.get("/catalog")
+async def catalog_page(request: Request):
+    session_key = request.cookies.get("Bearer")
+    if session_key is None:
+        return RedirectResponse(url="/login")
+    
+    status = await validate_token(session_key)
+    if status != 200:
+        return RedirectResponse(url="/login")
+    
+    return templates.TemplateResponse(
+        "catalog.html",
+        {
+            "request": request,
+            "title": "Каталог",
+            "token": session_key,
+            "current_path": "/catalog",
+        }
+    )
+
+
+@router.get("/catalog/file")
+async def catalog_file():
+    file_path = "file/catalog.pdf"  # Укажите путь к вашему PDF
     return FileResponse(file_path, media_type="application/pdf")
