@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mt-5">
+    <h1>Неожиданный бонус</h1>
+</div>
+
+<div class="d-flex flex-wrap justify-content-evenly">
+
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" style="background-color: #000080;" href="/rewards/binar">Бинар бонус</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" style="background-color: #000080;" href="/rewards/referal">Реферальные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" style="background-color: #000080;" href="/rewards/cheque">Чек от чека</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" style="background-color: #000080;" href="/rewards/status">Статусные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" style="background-color: #000080;" href="/rewards/sponsor">Спонсорские</a>
+    
+    <button type="button" class="btn btn-outline-primary btn-lg mt-3"  disabled>Неожиданный бонус</button>
+
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" style="background-color: #000080;" href="/rewards/tour">Туристический бонус</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" style="background-color: #000080;" href="/rewards/auto">Автопрограмма</a>
+
+</div>
+
+<div class="round card mt-5" style="height: 100vh;">
+    <div class="card-body">
+
+        <p id="bonusMessage" class="text-center fs-4"></p>
+        <div id="bonusDetails" class="text-center"></div>
+        
+    </div>
+</div>
+
+
+<script>
+    const SiteUrl = "{{ site_url_and_port }}";  // Адрес сайта
+    const apiUrl = `${SiteUrl}/bonus/surprise`; // API эндпоинт
+    const token = "{{ token }}";               // Токен авторизации
+
+    // Функция для загрузки данных с API
+    async function fetchBonusData() {
+        const bonusMessage = document.getElementById("bonusMessage");
+        const bonusDetails = document.getElementById("bonusDetails");
+        const bonusButton = document.getElementById("surpriseBonusButton");
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Ошибка: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            // Проверяем сообщение от сервера
+            if (data.active === false) {
+                bonusMessage.textContent = "У вас нету этого бонуса.";
+                bonusDetails.innerHTML = ""; // Убираем лишние элементы
+            } else if (data.active === true) {
+                bonusMessage.textContent = "Поздравляем! У вас есть Неожиданный бонус.";
+                bonusDetails.innerHTML = `
+                    <div class="alert alert-success mt-5" role="alert">
+                        <h4 class="alert-heading">Неожиданный бонус</h4>
+                        <p>Ваш бонус активен! Используйте его, чтобы получить дополнительные привилегии.</p>
+                        <hr>
+                        <p class="mb-0">Дата: ${new Date(data.bonus.created_at).toLocaleDateString('ru-RU')}</p>
+                    </div>
+                `;
+                bonusButton.disabled = false; // Разблокируем кнопку
+            } else {
+                bonusMessage.textContent = "Неизвестный ответ сервера.";
+                bonusDetails.innerHTML = "";
+            }
+        } catch (error) {
+            console.error('Ошибка при загрузке данных:', error);
+        }
+    }
+
+    // Запускаем загрузку данных при загрузке страницы
+    document.addEventListener("DOMContentLoaded", fetchBonusData);
+</script>
+
+{% endblock %}
