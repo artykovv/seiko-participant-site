@@ -14,6 +14,7 @@
                 <th scope="col">N</th>
                 <th scope="col">ФИО</th>
                 <th scope="col">Дата регистрации</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody id="sponsored_participants_table">
@@ -80,6 +81,7 @@ async function fetchSponsoredParticipants(page = 1, pageSize = 15,) {
                     </td>
                     <td>${participant.name} ${participant.lastname} ${participant.patronymic || ''}</td>
                     <td>${participant.register_at ? new Date(participant.register_at).toLocaleDateString('ru-RU') : 'Не указано'}</td>
+                    <td><a href="/add/mentor/${participant.id}" class="btn btn-primary">+</a></td>
                 </tr>
             `;
             tableBody.insertAdjacentHTML('beforeend', row);

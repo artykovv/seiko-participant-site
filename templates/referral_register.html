@@ -13,6 +13,31 @@
 
             <div class="d-flex row">
 
+                <div class="mb-3">
+                    <label for="sponsorInput" class="form-label">Спонсор</label>
+                    <input 
+                        type="text" 
+                        id="sponsorInput" 
+                        class="form-control" 
+                        value="{{ sponsor_personal_number }}" 
+                        disabled
+                    >
+                    <input 
+                        type="hidden" 
+                        id="sponsorIdInput" 
+                        value="{{ sponsor_id }}"
+                    >
+                </div>
+
+                <!-- Поиск наставника -->
+                <div class="mb-3">
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" onsubmit="return false;">
+                        <label class="form-label">Наставник</label>
+                        <input type="search" id="search-input-mentor" class="form-control" placeholder="Поиск..." aria-label="Search">
+                    </form>
+                    <div id="search-results-mentor" class="mt-3"></div>
+                </div>
+
                 <div class="col-sm-4 mb-3">
 
                     <label for="phoneInput" class="form-label">Филиал</label>
@@ -35,19 +60,15 @@
                 </div>
 
                 <div class="col-sm-4 mb-3">
-                    <label for="sponsorInput" class="form-label">Спонсор</label>
-                    <input 
-                        type="text" 
-                        id="sponsorInput" 
-                        class="form-control" 
-                        value="{{ sponsor_personal_number }}" 
-                        disabled
-                    >
-                    <input 
-                        type="hidden" 
-                        id="sponsorIdInput" 
-                        value="{{ sponsor_id }}"
-                    >
+                     <!-- Выбор пакета -->
+                    <label for="phoneInput" class="form-label">Пакет</label>
+                    <select class="form-select mb-3" id="paketsSelect" aria-label="Пакет">
+                        <option selected>Пакет</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                    <!-- Выбор пакета -->
                 </div>
 
             </div>
@@ -55,15 +76,7 @@
         </div>
         <!-- sd -->
 
-        <!-- Выбор пакета -->
-        <label for="phoneInput" class="form-label">Пакет</label>
-        <select class="form-select mb-3" id="paketsSelect" aria-label="Пакет">
-            <option selected>Пакет</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-        <!-- Выбор пакета -->
+       
 
         <!-- ФИО -->
         <div>
@@ -183,6 +196,106 @@
 
 const SiteUrl = "{{ site_url_and_port }}";
 const token = "{{ token }}";
+const SponsorID = "{{ sponsor_id }}";
+
+let selectedMentorId = null;   // Наставник
+let allMentors = [];           // Массив наставников, полученный с сервера
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    fetchAllMentorsForSponsor(SponsorID);
+
+async function fetchAllMentorsForSponsor(sponsorId) {
+        // Очистим локальный список
+        allMentors = [];
+        // Очистим поле ввода «Наставник» и его результаты (чтобы не путать пользователя)
+        document.getElementById('search-input-mentor').value = '';
+        document.getElementById('search-results-mentor').innerHTML = '';
+
+        const url = `${SiteUrl}/sponsored/participants/find_free_positions/${sponsorId}`;
+        fetch(url, {
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`,
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка HTTP: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // По условию, доступные наставники в поле "available_positions"
+            allMentors = data.available_positions || [];
+            // На данном этапе мы просто сохранили массив.
+            // Пользователь теперь сможет вводить в поле «Наставник» — и будем искать локально.
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке наставников:', error);
+        });
+    }
+
+    // =====================================================
+    // 3. Поле «Наставник»: локальный поиск по `allMentors`
+    // =====================================================
+    const searchInputMentor = document.getElementById('search-input-mentor');
+    const resultsContainerMentor = document.getElementById('search-results-mentor');
+
+    searchInputMentor.addEventListener('input', function() {
+        const query = searchInputMentor.value.trim();
+        
+        // Если нет выбранного спонсора — нет смысла искать наставников
+        if (!SponsorID) {
+            resultsContainerMentor.innerHTML = '<p class="text-danger">Сначала выберите спонсора</p>';
+            return;
+        }
+
+        if (query.length === 0) {
+            resultsContainerMentor.innerHTML = '';
+            return;
+        }
+
+        // Фильтруем локально по имени, personal_number, и т.д.
+        const filtered = allMentors.filter(item => {
+            const fullStr = `${item.name} ${item.personal_number}`.toLowerCase();
+            return fullStr.includes(query.toLowerCase());
+        });
+
+        displaySearchResultsMentor(filtered);
+    });
+
+    function displaySearchResultsMentor(mentors) {
+        resultsContainerMentor.innerHTML = '';
+
+        if (!mentors || mentors.length === 0) {
+            resultsContainerMentor.innerHTML = '<p class="text-center">Ничего не найдено</p>';
+            return;
+        }
+
+        const list = document.createElement('ul');
+        list.className = 'list-group';
+
+        mentors.forEach(mentor => {
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item';
+            // Пример вывода
+            listItem.textContent = `${mentor.name} ${mentor.lastname} ${mentor.patronymic} (${mentor.personal_number})`;
+
+            listItem.addEventListener('click', () => {
+                selectedMentorId = mentor.id;
+                // Заполняем поле «Наставник» для пользователя
+                searchInputMentor.value = listItem.textContent;
+                // Очищаем список результатов
+                resultsContainerMentor.innerHTML = '';
+            });
+
+            list.appendChild(listItem);
+        });
+
+        resultsContainerMentor.appendChild(list);
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     const disabledInput = document.getElementById('disabledTextInput');
@@ -303,7 +416,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     saveButton.addEventListener('click', function() {
         // Собираем данные из формы
-        const sponsorId = document.getElementById('sponsorIdInput').value;
         const name = document.getElementById('firstNameInput').value;
         const lastname = document.getElementById('lastNameInput').value;
         const patronymic = document.getElementById('middleNameInput').value;
@@ -326,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const branchId = parseInt(document.getElementById('adressSelect').value) || 0;
 
         // Проверка заполнения обязательных полей
-        if (!sponsorId || !name || !lastname || !email || !password || !phoneNumber || !address || !birthDate || !pin || !passportId || !passportIssuer || !passportIssueDate || !bank) {
+        if (!name || !lastname || !email || !password || !phoneNumber || !address || !birthDate || !pin || !passportId || !passportIssuer || !passportIssueDate || !bank) {
             alert("Пожалуйста, заполните все обязательные поля.");
             return;
         }
@@ -339,7 +451,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Данные для POST-запроса
         const requestBody = {
-            sponsor_id: sponsorId,
+            sponsor_id: SponsorID,
+            mentor_id: selectedMentorId,
+
             name: name,
             lastname: lastname,
             patronymic: patronymic,

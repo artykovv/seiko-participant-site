@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center mt-5">
+    <h1>25% скидка</h1>
+</div>
+
+<div class="d-flex flex-wrap justify-content-evenly">
+    <a class="btn btn-primary btn-lg mt-3"  style="background-color: #000080;" href="/rewards/binar">Бинар бонус</a>
+    <a class="btn btn-primary btn-lg mt-3"  style="background-color: #000080;" href="/rewards/referal">Реферальные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/cheque">Чек от чека</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/status">Статусные</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/sponsor">Спонсорские</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/surprise">Неожиданный бонус</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/tour">Туристический бонус</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/auto">Автопрограмма</a>
+    <a class="btn btn-primary btn-lg mt-3" style="background-color: #000080;" href="/rewards/business">Бизнес бонус</a>
+    <button type="button" class="btn btn-outline-primary btn-lg mt-3" disabled>25% скидка</button>
+
+
+
+</div>
+
+<div class="round card mt-5">
+    <div class="card-body" style="height: 100vh;">
+
+        <table class="table fs-6">
+            <thead>
+              <tr>
+                <th scope="col">Сумма</th>
+                <th scope="col">Дата использования</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+    </div>
+</div>
+
+{% include 'components/modals/personal_num_modal.html' %}
+
+
+<script>
+  const SiteUrl = "{{ site_url_and_port }}";  // Адрес сайта
+  const apiUrl = `${SiteUrl}/bonus/sale`;   // API эндпоинт
+  const token = "{{ token }}";               // Токен авторизации
+  
+  // Функция для загрузки данных с API
+  async function fetchBonusData() {
+      try {
+          const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+              }
+          });
+  
+          if (!response.ok) {
+              throw new Error(`Ошибка: ${response.status}`);
+          }
+  
+          const data = await response.json(); // Получаем JSON
+          renderTable(data);                  // Отображаем данные
+      } catch (error) {
+          console.error('Ошибка при загрузке данных:', error);
+      }
+  }
+  
+  // Функция для отображения данных в таблице
+  function renderTable(data) {
+      const tbody = document.querySelector('table tbody');
+      tbody.innerHTML = ''; // Очистить существующее содержимое таблицы
+  
+      data.forEach(item => {
+          const row = document.createElement('tr');
+  
+          row.innerHTML = `
+                <td>${item.amount}</td>
+                <td>${new Date(item.register_at).toLocaleDateString()}</td>
+          `;
+  
+          tbody.appendChild(row);
+      });
+  }
+  
+  // Загрузка данных при загрузке страницы
+document.addEventListener('DOMContentLoaded', fetchBonusData);
+</script>
+
+<style>
+    .btn:disabled{
+        border-color: #000080;
+        color: #000080;
+    }
+</style>
+{% endblock %}

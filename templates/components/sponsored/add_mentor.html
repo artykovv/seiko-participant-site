@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="text-center mt-5">
+    <h1>Назначить</h1>
+</div>
+
+<div class="round card mt-5">
+    <div class="card-body">
+        <form id="addParticipantForm" class="mt-3">
+
+
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" onsubmit="return false;">
+                <input type="search" id="search-input" class="form-control form-control-lg" placeholder="Поиск наставника..." aria-label="Search">
+            </form>
+            <ul class="list-group mt-2" id="mentor-list"></ul>
+
+            <select class="form-select form-select-lg mb-3 mt-5" id="sideSelect" aria-label="Сторона">
+                <option value="">Выберите сторону</option>
+            </select>
+
+            <div class="d-grid gap-2">
+                <button type="button" id="submitBtn" class="btn btn-primary btn-lg mt-5">Добавить</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    const participantId = "{{ id }}";
+    const token = "{{ token }}";
+    const SiteUrl = "{{ site_url_and_port }}";
+
+    const sideSelect = document.getElementById('sideSelect');
+    const searchInput = document.getElementById('search-input');
+    const mentorList = document.createElement('ul'); // Создаем список для наставников
+    mentorList.className = 'list-group mt-2';
+    searchInput.parentNode.appendChild(mentorList); // Добавляем его сразу после поля поиска
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Запрашиваем доступные позиции для наставников
+    fetch(`${SiteUrl}/sponsored/find_free_positions`,
+        {
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`,
+            }
+        }
+
+    )
+        .then(response => response.json())
+        .then(data => {
+            availablePositions = data.available_positions;
+            mentorList.style.display = 'none'; // Скрываем список до начала поиска
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке данных наставников:', error);
+        });
+
+    // Фильтрация наставников при вводе в поле поиска
+    searchInput.addEventListener('input', function () {
+        const query = searchInput.value.toLowerCase();
+        const filteredMentors = availablePositions.filter(position => {
+            return position.name.toLowerCase().includes(query) ||
+                   String(position.personal_number).toLowerCase().includes(query);
+        });
+
+        updateMentorList(filteredMentors);
+    });
+
+    // Функция обновления списка наставников
+    function updateMentorList(mentors) {
+        mentorList.innerHTML = '';
+        mentorList.style.display = mentors.length > 0 ? 'block' : 'none'; // Показать или скрыть список
+
+        mentors.forEach(position => {
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item list-group-item-action fs-3';
+            listItem.dataset.id = position.id;
+            listItem.textContent = `${position.personal_number} ${position.name} ${position.lastname}`;
+
+            listItem.addEventListener('click', function () {
+                // Выбор наставника: скрыть остальных
+                mentorList.querySelectorAll('.list-group-item').forEach(item => {
+                    item.style.display = 'none';
+                });
+
+                // Показать только выбранный элемент
+                listItem.style.display = 'block';
+                listItem.classList.add('active');
+                selectedMentorId = parseInt(listItem.dataset.id); // Сохраняем ID наставника
+
+                // Обновляем стороны на основе выбранного наставника
+                const selectedPosition = availablePositions.find(pos => pos.id == selectedMentorId);
+                if (selectedPosition) {
+                    sideSelect.innerHTML = '<option value="">Выберите сторону</option>';
+                    if (selectedPosition.position === 'both') {
+                        sideSelect.appendChild(new Option('Левая', 'left'));
+                        sideSelect.appendChild(new Option('Правая', 'right'));
+                    } else if (selectedPosition.position === 'left') {
+                        sideSelect.appendChild(new Option('Левая', 'left'));
+                    } else if (selectedPosition.position === 'right') {
+                        sideSelect.appendChild(new Option('Правая', 'right'));
+                    }
+                }
+            });
+
+            mentorList.appendChild(listItem);
+        });
+    }
+
+    // Обработка нажатия на кнопку "Добавить в структуру"
+    submitBtn.addEventListener('click', function () {
+        const side = sideSelect.value;
+
+        if (!selectedMentorId || !side) {
+            alert('Пожалуйста, заполните все поля');
+            return;
+        }
+
+        const payload = {
+            participant_id: parseInt(participantId),
+            mentor_id: selectedMentorId,
+            position: side,
+        };
+
+        fetch(`${SiteUrl}/sponsored/add/mentor`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Успешно добавлено:', data);
+            alert('Участник успешно добавлен в структуру!');
+            window.location.href = '/new/sponsored';
+        })
+        .catch(error => {
+            console.error('Ошибка при добавлении участника:', error);
+            alert('Ошибка при добавлении участника');
+        });
+    });
+
+})
+
+
+</script>
+
+
+{% endblock %}
+
