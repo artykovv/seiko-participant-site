@@ -111,11 +111,11 @@
             <label for="confirmPasswordInput" class="form-label">Повторите пароль</label>
             <input type="password" class="form-control" id="confirmPasswordInput">
         </div>
-
+<!-- 
         <div class="mb-3">
             <label for="personalInfoInput" class="form-label">Личная информация</label>
             <textarea class="form-control" id="personalInfo" rows="3"></textarea>
-        </div>
+        </div> -->
 
 
 
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
         participants.forEach(participant => {
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item';
-            listItem.textContent = `${participant.name} ${participant.lastname} (${participant.personal_number})`;
+            listItem.textContent = `${participant.personal_number}`;
             
             listItem.addEventListener('click', () => {
                 // 1) Запоминаем ID спонсора
@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const patronymic = document.getElementById('middleNameInput').value;
         // const login = document.getElementById('loginInput').value;
         const email = document.getElementById('emailInput').value;
-        const personal_info = document.getElementById ('personalInfo').value;
+        // const personal_info = document.getElementById ('personalInfo').value;
         const password = document.getElementById('passwordInput').value;
         const confirmPassword = document.getElementById('confirmPasswordInput').value;
         const phoneNumber = document.getElementById('phoneInput').value;
@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', function() {
             address: address,
             birth_date: birthDate,
             pin: pin,
-            personal_info: personal_info,
+            // personal_info: personal_info,
             passport_id: passportId,
             passport_issuer: passportIssuer,
             passport_issue_date: passportIssueDate,
