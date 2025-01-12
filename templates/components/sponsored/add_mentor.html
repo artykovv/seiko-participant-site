@@ -16,10 +16,6 @@
             </form>
             <ul class="list-group mt-2" id="mentor-list"></ul>
 
-            <select class="form-select form-select-lg mb-3 mt-5" id="sideSelect" aria-label="Сторона">
-                <option value="">Выберите сторону</option>
-            </select>
-
             <div class="d-grid gap-2">
                 <button type="button" id="submitBtn" class="btn btn-primary btn-lg mt-5">Добавить</button>
             </div>
@@ -35,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const token = "{{ token }}";
     const SiteUrl = "{{ site_url_and_port }}";
 
-    const sideSelect = document.getElementById('sideSelect');
     const searchInput = document.getElementById('search-input');
     const mentorList = document.createElement('ul'); // Создаем список для наставников
     mentorList.className = 'list-group mt-2';
@@ -93,20 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 listItem.style.display = 'block';
                 listItem.classList.add('active');
                 selectedMentorId = parseInt(listItem.dataset.id); // Сохраняем ID наставника
-
-                // Обновляем стороны на основе выбранного наставника
-                const selectedPosition = availablePositions.find(pos => pos.id == selectedMentorId);
-                if (selectedPosition) {
-                    sideSelect.innerHTML = '<option value="">Выберите сторону</option>';
-                    if (selectedPosition.position === 'both') {
-                        sideSelect.appendChild(new Option('Левая', 'left'));
-                        sideSelect.appendChild(new Option('Правая', 'right'));
-                    } else if (selectedPosition.position === 'left') {
-                        sideSelect.appendChild(new Option('Левая', 'left'));
-                    } else if (selectedPosition.position === 'right') {
-                        sideSelect.appendChild(new Option('Правая', 'right'));
-                    }
-                }
             });
 
             mentorList.appendChild(listItem);
@@ -115,17 +96,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Обработка нажатия на кнопку "Добавить в структуру"
     submitBtn.addEventListener('click', function () {
-        const side = sideSelect.value;
-
-        if (!selectedMentorId || !side) {
-            alert('Пожалуйста, заполните все поля');
+        if (!selectedMentorId) {
+            alert('Пожалуйста, выберите наставника');
             return;
         }
 
         const payload = {
             participant_id: parseInt(participantId),
             mentor_id: selectedMentorId,
-            position: side,
         };
 
         fetch(`${SiteUrl}/sponsored/add/mentor`, {
@@ -156,4 +134,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 {% endblock %}
-
