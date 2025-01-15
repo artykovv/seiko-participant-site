@@ -280,7 +280,7 @@ async function fetchAllMentorsForSponsor(sponsorId) {
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item';
             // Пример вывода
-            listItem.textContent = `${mentor.name} ${mentor.lastname} ${mentor.patronymic} (${mentor.personal_number})`;
+            listItem.textContent = `${mentor.personal_number}`;
 
             listItem.addEventListener('click', () => {
                 selectedMentorId = mentor.id;
