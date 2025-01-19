@@ -22,17 +22,14 @@
 
 </div>
 
-<div class="round card mt-5" style="height: 100vh;">
+<div class="round card mt-5">
     <div class="card-body">
 
         <table class="table fs-6">
             <thead>
               <tr>
                 <th>Период</th>
-                <th>Малая В </th>
-                <th>Большая В</th>
                 <th>Бонус</th>
-                <th>Большая В</th>
               </tr>
             </thead>
             <tbody>
@@ -79,10 +76,7 @@
     
             row.innerHTML = `
                 <td>${item.period}</td>
-                <td>${item.small_volume}</td>
-                <td>${item.big_volume}</td>
                 <td><strong>${item.bonus_amount}<strong></td>
-                <td>${item.big_branch_side === 'right' ? 'Правый' : 'Левый'}</td>
             `;
     
             tbody.appendChild(row);
